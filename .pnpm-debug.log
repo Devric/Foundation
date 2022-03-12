@@ -1,0 +1,54 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "test-ssr-react",
+      "private": true,
+      "version": "0.0.0",
+      "scripts": {
+        "dev": "node server",
+        "build": "npm run build:client && npm run build:server",
+        "build:client": "vite build --outDir dist/client",
+        "build:server": "vite build --ssr src/entry-server.jsx --outDir dist/server",
+        "generate": "vite build --outDir dist/static && npm run build:server && node prerender",
+        "serve": "cross-env NODE_ENV=production node server",
+        "debug": "node --inspect-brk server"
+      },
+      "dependencies": {
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-router": "^5.2.1",
+        "react-router-dom": "^5.3.0"
+      },
+      "devDependencies": {
+        "@vitejs/plugin-react": "workspace:*",
+        "compression": "^1.7.4",
+        "cross-env": "^7.0.3",
+        "express": "^4.17.1",
+        "serve-static": "^1.14.1"
+      }
+    },
+    "prefix": "/Users/devric/site/project/zaplate"
+  },
+  "2 debug pnpm:context": {
+    "currentLockfileExists": false,
+    "storeDir": "/Users/devric/.pnpm-store/v3",
+    "virtualStoreDir": "/Users/devric/site/project/zaplate/node_modules/.pnpm"
+  },
+  "3 debug pnpm:stage": {
+    "prefix": "/Users/devric/site/project/zaplate",
+    "stage": "resolution_started"
+  },
+  "4 error pnpm": {
+    "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+    "pkgsStack": [],
+    "err": {
+      "name": "pnpm",
+      "message": "In : No matching version found for @vitejs/plugin-react@* inside the workspace",
+      "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+      "stack": "pnpm: In : No matching version found for @vitejs/plugin-react@* inside the workspace\n    at tryResolveFromWorkspace (/Users/devric/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:85994:15)\n    at resolveNpm (/Users/devric/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:85885:39)\n    at Object.resolve (/Users/devric/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:86117:40)\n    at ctx.requestsQueue.add.priority (/Users/devric/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:74471:75)\n    at run (/Users/devric/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:74187:90)\n    at PQueue._tryToStartAnother (/Users/devric/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:74141:13)\n    at /Users/devric/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:74200:16\n    at new Promise (<anonymous>)\n    at PQueue.add (/Users/devric/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:74182:16)\n    at resolveAndFetch (/Users/devric/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:74471:55)"
+    }
+  }
+}
