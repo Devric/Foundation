@@ -3,11 +3,13 @@ import React, {useRef} from 'react'
 import tw, { css } from 'twin.macro'
 
 // using TW and Emotion
+// text-'test-red' comes from tailwind customize settings
 const hoverStyles = css`
-  &:hover {
-    border-color: black;
-    ${tw`text-black`}
-  }
+	${tw`text-test-red`}
+	&:hover {
+		border-color: black;
+		${tw`text-black`}
+	}
 `
 
 export default function Env() {
