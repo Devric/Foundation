@@ -4,13 +4,17 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import ApiRoutes from './src/api'
 
+import Debug from 'debug'
+
+const debug = Debug('server')
+
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
+const isProd = process.env.NODE_ENV === 'production'
 
 process.env.MY_CUSTOM_SECRET = 'API_KEY_qwertyuiop'
 
 async function createServer(
-	root = process.cwd(),
-	isProd = process.env.NODE_ENV === 'production'
+	root = process.cwd()
 ) {
 	const resolve = (p: string) => path.resolve(__dirname, p)
 
@@ -27,6 +31,7 @@ async function createServer(
 	 */
 	let vite: any
 	if (!isProd) {
+		debug('Starting: isProd: '+isProd)
 		vite = await require('vite').createServer({
 			root,
 			logLevel: isTest ? 'error' : 'info',
