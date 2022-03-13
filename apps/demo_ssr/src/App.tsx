@@ -1,4 +1,4 @@
-import './styles/index.css'
+import React from 'react'
 import { QueryClient, QueryClientProvider} from 'react-query'
 import { Link, Route, Switch } from 'react-router-dom'
 

@@ -1,5 +1,14 @@
 import { useQuery, useMutation } from 'react-query'
-import {useRef} from 'react'
+import React, {useRef} from 'react'
+import tw, { css } from 'twin.macro'
+
+// using TW and Emotion
+const hoverStyles = css`
+  &:hover {
+    border-color: black;
+    ${tw`text-black`}
+  }
+`
 
 export default function Env() {
 	const { isLoading, error, data } = useQuery('testData', () => {
@@ -49,7 +58,7 @@ function Name() {
 	return (
 		<>
 			<p>{data}</p>
-			<input type="text" ref={inputRef} className="border-2 border-indigo-500" />
+			<input type="text" ref={inputRef} css={[tw`border`, hoverStyles]} />
 			<button onClick={()=> mutation.mutate( inputRef.current.value) }>Update</button>
 		</>
 	)

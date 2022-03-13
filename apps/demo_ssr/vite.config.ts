@@ -6,10 +6,23 @@ const react = require('@vitejs/plugin-react')
 module.exports = {
 	plugins: [
 		react({
-			// allow emotion to compile properly
-			jsxImportSource: "@emotion/react",
 			babel: {
-				plugins: ["@emotion/babel-plugin"],
+				plugins: [
+				'babel-plugin-macros',
+				[
+					'@emotion/babel-plugin-jsx-pragmatic',
+					{
+					export: 'jsx',
+					import: '__cssprop',
+					module: '@emotion/react',
+					},
+				],
+				[
+					'@babel/plugin-transform-react-jsx',
+					{ pragma: '__cssprop' },
+					'twin.macro',
+				],
+				],
 			},
 		}),
 	],

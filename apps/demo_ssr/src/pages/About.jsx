@@ -1,3 +1,4 @@
+import React from 'react'
 import GlobalState, { useState } from '../GlobalState'
 
 export default function About() {
