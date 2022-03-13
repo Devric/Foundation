@@ -1,0 +1,16 @@
+# DEMO SSR
+
+quik template to start with React SSR with VITE and tailwind
+
+- build
+-- vite
+-- vite ssr
+
+- core
+-- react
+-- typescript
+
+- styles
+-- tailwind
+
+# 

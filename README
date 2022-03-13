@@ -1,15 +1,12 @@
-# Zap
+Starting Foudation Mono Repo
 
-quik template to start with
-- build
--- vite
--- vite ssr
+- Demo SSR: React.TS SSR with vite and tailwind
+- @TODO SPA
+- @TODO StoryBook UI
 
-- core
--- react
--- typescript
+## Tips
+- Local Ignore:  echo YOURFILE_OR_DIRECTOY >> .git/info/exclude 
 
-- styles
--- tailwind
+		exclude file is the same as .gitignore, however it will not be pushed to the central repo
+		after pulling work repos eg: apps/workApp, you can ignore it from the foundation exclude and have a separete git repo
 
-# 
