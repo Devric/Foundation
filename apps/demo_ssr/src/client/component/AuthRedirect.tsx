@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom';
 
 
-export default function AuthRedirect({ children }: { children: React.ReactNode }) {
+export default function AuthRedirect({ children }: { children: JSX.Element }) {
 	let auth = {user:false};
 	let location = useLocation();
 	let error = false

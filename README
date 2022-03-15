@@ -3,6 +3,9 @@ Starting Foudation Mono Repo
 - Demo SSR: React.TS SSR with vite and tailwind
 - @TODO SPA
 - @TODO StoryBook UI
+- Web3 project
+- hardhat repo
+- EDA microservices with kafka/rabbitmq
 
 ## Tips
 - Local Ignore:  echo YOURFILE_OR_DIRECTOY >> .git/info/exclude 

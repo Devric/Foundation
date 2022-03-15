@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider} from 'react-query'
 import { Link, Routes, Route } from 'react-router-dom'
 import tw, { css } from 'twin.macro'
 
+import TopMenu from './client/component/TopMenu'
 import AuthRedirect from './client/component/AuthRedirect'
 
 const queryClient = new QueryClient()
@@ -22,7 +23,7 @@ const routes = Object.keys(pages).map((path) => {
 })
 
 // reorder routes based on the below array so that we can list in auto generated navigation
-const orderedRoutes = ['Home', 'Ajax', 'About'].map((name:string)=> routes.filter(route => route.name === name)[0])
+const orderedRoutes = ['Home', 'Ajax', 'About','Sample','Layout', 'Login'].map((name:string)=> routes.filter(route => route.name === name)[0])
 
 let styles = {
 	nav: css`
@@ -56,25 +57,8 @@ export function App() {
 	return (
 		<>
 			<QueryClientProvider client={queryClient}>
-				<header css={tw`container`}>
-					<nav id="nav" css={styles.nav}>
-
-						{orderedRoutes.map(({ name, path }, i) => {
-							return (
-								<Link to={path} key={i}>
-									<button css={styles.navLink}>
-										{name}	
-									</button>
-								</Link>
-							)
-						})}
-
-						<div css={styles.navBtnContainer}>
-							<Link to="/login" css={ styles.loginBtn }> Login </Link>
-							<Link to="/register" css={ styles.startBtn }> Register </Link>
-						</div>
-					</nav>
-
+				<header css={tw`container h-24`}>
+					<TopMenu routes={orderedRoutes} />
 				</header>
 				<Routes>
 					{routes.map(({ path, secured, component: RouteComp }) => {

@@ -13,4 +13,13 @@ quik template to start with React SSR with VITE and tailwind
 - styles
 -- tailwind
 
-# 
+### Structure
+
+@TODO
+- documentation update: files and folder explaination
+- Server: Error Handling
+- Client: Error Handling
+- Sample Data model and interaction
+- simple UI
+- intergrate theme 
+- intergrate ux 
