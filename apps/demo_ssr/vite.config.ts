@@ -29,7 +29,7 @@ module.exports = {
 	// Use for emotion/react to auto inject jsx, this allows components to have css={} property
 	esbuild: {
 		jsxFactory: `jsx`,
-    	jsxInject: `import { jsx, css } from '@emotion/react'`,
+    	jsxInject: `import { jsx } from '@emotion/react'`,
 	},
 
 	build: {

@@ -15,21 +15,13 @@ let styles = {
 	`
 }
 
-export default function Home() {
+export default function Register() {
 	const state = useState(GlobalState)
 
 	return (
 		<div css={tw`relative items-center justify-center w-full overflow-x-hidden lg:pt-40 lg:pb-40 xl:pt-40 xl:pb-64`}>
-			<div css={tw`container flex flex-col items-center justify-between h-full max-w-6xl px-8 mx-auto -mt-32 lg:flex-row xl:px-0`}>
-				<div css={styles.heroLeft}>
-					<h1 css={styles.header}> Hello world! </h1>
-				</div>
-				<div css={styles.heroRight}>
-					<p css={tw`text-center text-8xl`}>
-						{state.get()}
-					</p>
-					<button css={tw`bg-indigo-400 p-2 text-white rounded-lg`} onClick={() => state.set(p => p + 1)}>Add</button>
-				</div>
+			<div>
+				register
 			</div>
 		</div>
 	)

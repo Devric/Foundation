@@ -12,7 +12,7 @@ const hoverStyles = css`
 	}
 `
 
-export default function Env() {
+export default function Ajax() {
 	const { isLoading, error, data } = useQuery('testData', () => {
 		return fetch('http://localhost:3000/api/test')
 		.then(res => {

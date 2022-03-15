@@ -1,7 +1,9 @@
 import React from 'react'
 import { QueryClient, QueryClientProvider} from 'react-query'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Link, Routes, Route } from 'react-router-dom'
 import tw, { css } from 'twin.macro'
+
+import AuthRedirect from './client/component/AuthRedirect'
 
 const queryClient = new QueryClient()
 
@@ -14,9 +16,13 @@ const routes = Object.keys(pages).map((path) => {
 	return {
 		name,
 		path: name === 'Home' ? '/' : `/${name.toLowerCase()}`,
-		component: pages[path].default
+		component: pages[path].default,
+		secured: name === 'About'
 	}
 })
+
+// reorder routes based on the below array so that we can list in auto generated navigation
+const orderedRoutes = ['Home', 'Ajax', 'About'].map((name:string)=> routes.filter(route => route.name === name)[0])
 
 let styles = {
 	nav: css`
@@ -52,34 +58,41 @@ export function App() {
 			<QueryClientProvider client={queryClient}>
 				<header css={tw`container`}>
 					<nav id="nav" css={styles.nav}>
-						{routes.map(({ name, path }, i) => {
+
+						{orderedRoutes.map(({ name, path }, i) => {
 							return (
 								<Link to={path} key={i}>
 									<button css={styles.navLink}>
-										{name}
+										{name}	
 									</button>
 								</Link>
 							)
 						})}
 
 						<div css={styles.navBtnContainer}>
-							<a href="#_" css={ styles.loginBtn }>Login</a>
-							<a href="#_"
-								css={ styles.startBtn }>Get
-								Started</a>
+							<Link to="/login" css={ styles.loginBtn }> Login </Link>
+							<Link to="/register" css={ styles.startBtn }> Register </Link>
 						</div>
 					</nav>
 
 				</header>
-				<Switch>
-					{routes.map(({ path, component: RouteComp }) => {
-						return (
-							<Route key={path} path={path}>
-								<RouteComp />
-							</Route>
-						)
+				<Routes>
+					{routes.map(({ path, secured, component: RouteComp }) => {
+						if (secured) {
+							return (
+								<Route key={path} path={path} element={
+									<AuthRedirect>
+										<RouteComp />
+									</AuthRedirect>
+								} />
+							)
+						} else {
+							return (
+								<Route key={path} path={path} element={<RouteComp />} />
+							)
+						}
 					})}
-				</Switch>
+				</Routes>
 			</QueryClientProvider>
 		</>
 	)
