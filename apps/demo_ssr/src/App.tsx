@@ -2,6 +2,7 @@ import React from 'react'
 import { QueryClient, QueryClientProvider} from 'react-query'
 import { Link, Routes, Route } from 'react-router-dom'
 import tw, { css } from 'twin.macro'
+import GlobalStyles from './client/GlobalStyles'
 
 import TopMenu from './client/component/TopMenu'
 import AuthRedirect from './client/component/AuthRedirect'
@@ -56,6 +57,7 @@ let styles = {
 export function App() {
 	return (
 		<>
+			<GlobalStyles />
 			<QueryClientProvider client={queryClient}>
 				<header css={tw`container h-24`}>
 					<TopMenu routes={orderedRoutes} />
