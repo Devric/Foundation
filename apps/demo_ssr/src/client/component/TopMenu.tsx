@@ -24,9 +24,6 @@ interface iRoutes {
 }
 
 export default function TopMenu({routes}:{routes:iRoutes[]}) {
-	console.log(routes)
-
-
 	return (
 		<nav id="header" css={tw`fixed w-full z-30 top-0 text-white`}>
 
