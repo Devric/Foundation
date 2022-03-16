@@ -23,3 +23,5 @@ quik template to start with React SSR with VITE and tailwind
 - simple UI
 - intergrate theme 
 - intergrate ux 
+- Fix jest testing
+- Add Playwright e2e

@@ -2,6 +2,8 @@ import { Request, Response, Router } from 'express';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+import { UserRepository } from  '../server/data/UserStore'
+
 const router = Router();
 
 const tempAppSecret = 'shhhhh'
