@@ -14,6 +14,23 @@ quik template to start with React SSR with VITE and tailwind
 -- tailwind
 
 ### Structure
+- server.ts  		- SSR server, entry point for development ( DEV mode will load up src/entry-server.ts )
+- index.html 		- frontend index structure for the browser
+- tailwind   		- css configuration file, can use to customize tailwind variables
+- vite       		- vite config, this is the builder, minifier, code compressor
+- preender   		- this file is to help generate dymaic server/client into static .js/html/css files
+- types      		- typescript definition files
+- temp       		- temporary folder for files such as DB created locally
+- src        		- source file for the application
+- entry-client.ts 	- frontend react entry point
+- entry-server.ts 	- backendend ssr react entry point
+- App.tsx 			- React applicaiton root component
+- shared		    - shared libs for both front/backend
+- pages				- react frontend page components
+- client 			- frontend libraries
+- server 			- backend libraries
+- assets			- images/facicons other documents
+- api				- express /api routes for ajax requests
 
 @TODO
 - documentation update: files and folder explaination
