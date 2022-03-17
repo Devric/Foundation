@@ -1,8 +1,6 @@
 import React,{useEffect} from 'react'
-import GlobalState, { useState } from '../client/GlobalState'
+import GlobalState, { useState, Persistence } from '../client/GlobalState'
 import tw, { css } from 'twin.macro'
-
-import { Persistence } from '@hookstate/persistence';
 
 import {
   Routes,
@@ -29,21 +27,22 @@ let styles = {
 
 export default function Login() {
 	const state = useState(GlobalState)
-	const LocalAuth = useState("")
+	const navigate = useNavigate()
+	let location = useLocation()
 
+
+	const LocalAuth = useState("")
 	if (typeof window !== "undefined") LocalAuth.attach(Persistence("auth"));
 
-	const formState = useState({ email: "", pass: "", isDirty: false })
+	const formState = useState({ email: "bob", pass: "bob", isDirty: false })
 
-	let location = useLocation
 	// state.from is saved at AuthRedirect
 	let from = location.state?.from?.pathname || '/'
-	function BackToOriginalUrl() {
+	function backToOriginalUrl() {
 		navigate(from, {replace: true})
 	}
 
 	useEffect(()=>{
-		LocalAuth.set("sdfasofijaweoifjag23432")
 	},[])
 
 	return (
@@ -117,5 +116,15 @@ export default function Login() {
 				"Content-Type": "application/json"
 			}
 		})
+		.then( res => {
+			// TODO error handling
+			if (res.status !== 200) return alert("login error");
+			return res.json()
+		})
+		.then( data => {
+			LocalAuth.set(data.token)
+			backToOriginalUrl()
+		})
 	}
 }
+

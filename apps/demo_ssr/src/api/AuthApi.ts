@@ -1,12 +1,15 @@
-import { Request, Response, Router } from 'express';
+import { Request, Response, Router, NextFunction } from 'express';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-import { UserRepository } from  '../server/data/UserStore'
+import { UserModel, userRepository } from  '../server/data/UserStore'
+import DB from '../server/data/_db'
 
 const router = Router();
 
 const tempAppSecret = 'shhhhh'
+
+const userDb = DB('user')
 
 class NotFoundError extends Error {}
 
@@ -15,37 +18,40 @@ class NotFoundError extends Error {}
  * ==================================
  */
 var name: string = "no name"
-router.post('/login', async (req: Request, res: Response) => {
-	const {
-		pass  = null,
-		email = null
-	} = req.body
-
+router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		// Find user
-		var user = {
-			id: 'bob',
-			password: '1234'
+	// const {
+	// 	email = 'pass',
+	// 	pass  = 'bob'
+	// } = req.body
+
+	let pass = 'pass'
+	let email = 'bob'
+
+		if (email) {
+
 		}
 
-		// // check user password
-		// const vallidPass = await bcrypt.compare(pass, user.password)
+		// Find user
+		let dbUser = await userDb.find({email: email})
 
-		// if (!vallidPass) return res.status(400).send('Incorrect password');
+		// expect record in collection unique
+		if (dbUser.length !== 1) throw new Error('Incorrect user or password');
+
+		// check user password
+		// TODO const vallidPass = await bcrypt.compare(pass, user.password)
+		const validPass = bcrypt.compare(pass, dbUser[0].pass)
+
+		if (!validPass) throw new Error('Incorrect user or password');
 
 		const token = jwt.sign({
-			id: user.id,
+			id: dbUser[0]._id,
+			email: dbUser[0].email,
 			meta: { msg: "some message" }
 		}, tempAppSecret, { expiresIn: '15m'})
 
 		res.header("token", token).send({"token": token})
-	} catch (err) {
-		if (err instanceof NotFoundError) {
-			res.status(401).send("Email/Password incorrect")
-		} else {
-			res.status(500).send("Error loging in")
-		}
-	}
+	} catch (err) { next(err) }
 });
 
 
@@ -53,23 +59,37 @@ router.post('/login', async (req: Request, res: Response) => {
  * Register
  * ==================================
  */
-router.post('/register', async (req: Request, res: Response) => {
-	const {
-		password = null,
-		email    = null
-	} = req.body
+router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const {
+			email = "",
+			pass = ""
+		} : {email:string, pass:string} = req.body
 
-	// check existing user before continue
+		// @TODO validate email
 
-	// Hash Password
-	if (password === null) return
-	const salt = await bcrypt.genSalt(10)
-	const hashPassword = await bcrypt.hash(req.body.password, salt)
+		// check existing user before continue
+		let existingUser: UserModel[] = await userRepository
+									.find({email: email})
 
-	// create user object
+		// email should be unique, therefore no user should be found
+		// TODO error types
+		if (existingUser.length) throw new Error("Incorrect User or password found")
 
-	// send back message
-	res.status(200).send('ok');
+		// Hash Password
+		// TODO password validation
+		if (pass === null) throw new Error("Incorrect User or password found")
+
+		const salt:string = await bcrypt.genSalt(10)
+		const hashPassword:string = await bcrypt.hash(pass, salt)
+
+		// create user object
+		var user: UserModel = await new UserModel({email:email, pass:hashPassword})
+
+		var createdUser = await userRepository.insert(user)
+
+		res.status(200).send('User created please login');
+	} catch(err) { next(err) }
 });
 
 
@@ -91,7 +111,7 @@ export function authenticatedMiddleware(level: string) {
 			const verified = jwt.verify(token, tempAppSecret)
 
 			// check user permission
-			let isAdmin = level === 'admin' 
+			let isAdmin = level === 'admin'
 
 			req.user = "verified user"
 			next()

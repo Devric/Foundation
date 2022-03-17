@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import express from 'express'
+import express, {ErrorRequestHandler, Request, Response, NextFunction} from 'express'
 import bodyParser from 'body-parser'
 import ApiRoutes from './src/api'
 
@@ -88,6 +88,15 @@ async function createServer(
 			!isProd && vite.ssrFixStacktrace(e)
 			console.log(e.stack)
 			res.status(500).end(e.stack)
+		}
+	})
+
+	// @TODO refactor Error handler, detect type and map message
+	app.use((err: Error, req: Request,res:Response,next: NextFunction)=>{
+		if (err) {
+			console.error(err)
+			// Just throw a catch all for now, needs user message, server message
+			res.status(500).send({error: "Server error"})
 		}
 	})
 

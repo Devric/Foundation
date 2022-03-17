@@ -15,7 +15,6 @@ let styles = {
 	`
 }
 
-
 interface iRoutes {
 	name: string
 	path: string
@@ -23,7 +22,7 @@ interface iRoutes {
 	secured: string
 }
 
-export default function TopMenu({routes}:{routes:iRoutes[]}) {
+export default function TopMenu({routes, isLoggedin=false}:{routes:iRoutes[], isLoggedin:boolean}) {
 	return (
 		<nav id="header" css={tw`fixed w-full z-30 top-0 text-white`}>
 
@@ -49,19 +48,14 @@ export default function TopMenu({routes}:{routes:iRoutes[]}) {
 
 					<ul css={tw`lg:flex justify-end flex-1 items-center`}>
 
-
 						{routes.map(({ name, path }, i) => {
+							// TODO replace Login link with logout link 
 							return (
 								<li css={tw`mr-3`}  key={i}>
-									<Link to={path} css={tw`inline-block py-2 px-4 text-black font-bold no-underline`} href="#"> {name} </Link>
+									<Link to={path} css={tw`inline-block py-2 px-4 text-black font-bold no-underline`}> {name} </Link>
 								</li>
 							)
 						})}
-
-						<div >
-						</div>
-
-
 
 					</ul>
 

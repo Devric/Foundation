@@ -9,7 +9,8 @@
 		"build:server": "vite build --ssr src/entry-server.jsx --outDir dist/server",
 		"generate": "vite build --outDir dist/static && npm run build:server && node prerender",
 		"serve": "cross-env NODE_ENV=production node server",
-		"debug": "node --inspect-brk server"
+		"debug": "node --inspect-brk server",
+		"seed": "ts-node ./__tests__/seed.ts"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.8.2",

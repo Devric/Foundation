@@ -32,10 +32,12 @@ export function Model<T>() {
 }
 
 export interface iRepo<T> {
-	exists(t: T): Promise<boolean>;
-	delete(t: T): Promise<any>;
-	findById(id: string): Promise<T>;
-	insert(t: T): Promise<any>;
-	upsert(t: T): Promise<any>;
+	// exists(t: T): Promise<boolean>;
+	// findById(id: string): Promise<T>;
+	insert(t : T) : Promise<any>;
+	upsert(t : T) : Promise<any>;
+	find  (t : T) : Promise<any>;
+	update(t : T) : Promise<any>;
+	delete(t : T) : Promise<any>;
 }
 

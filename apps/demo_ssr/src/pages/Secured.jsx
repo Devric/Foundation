@@ -23,7 +23,6 @@ export default function Secured() {
 	return (
 		<div css={tw`relative items-center justify-center w-full overflow-x-hidden lg:pt-40 lg:pb-40 xl:pt-40 xl:pb-64`}>
 			<div css={tw`container flex flex-col items-center justify-between h-full max-w-6xl px-8 mx-auto -mt-32 lg:flex-row xl:px-0`}>
-
 				<div css={styles.heroLeft}>
 					<h1 css={styles.header}> Secured Page </h1>
 				</div>

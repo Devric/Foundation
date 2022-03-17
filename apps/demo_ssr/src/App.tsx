@@ -19,7 +19,7 @@ const routes = Object.keys(pages).map((path) => {
 		name,
 		path: name === 'Home' ? '/' : `/${name.toLowerCase()}`,
 		component: pages[path].default,
-		secured: name === 'About'
+		secured: name === 'Secured'
 	}
 })
 
