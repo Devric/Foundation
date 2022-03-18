@@ -2,8 +2,14 @@ import { Request, Response, Router, NextFunction } from 'express';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+import passport from 'passport'
+import {Strategy as localStrategy} from 'passport-local'
+import { ExtractJwt, Strategy as JWTStrategy } from 'passport-jwt'
+
 import { UserModel, userRepository } from  '../server/data/UserStore'
 import DB from '../server/data/_db'
+
+
 
 const router = Router();
 
@@ -17,21 +23,10 @@ class NotFoundError extends Error {}
  * Login
  * ==================================
  */
-var name: string = "no name"
-router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
-	try {
-	// const {
-	// 	email = 'pass',
-	// 	pass  = 'bob'
-	// } = req.body
-
-	let pass = 'pass'
-	let email = 'bob'
-
-		if (email) {
-
-		}
-
+passport.use(new localStrategy({
+	usernameField: 'email'
+}, async (email, password, done) => {
+	try{
 		// Find user
 		let dbUser = await userDb.find({email: email})
 
@@ -39,8 +34,8 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
 		if (dbUser.length !== 1) throw new Error('Incorrect user or password');
 
 		// check user password
-		// TODO const vallidPass = await bcrypt.compare(pass, user.password)
-		const validPass = bcrypt.compare(pass, dbUser[0].pass)
+		const validPass = await bcrypt.compare(password, dbUser[0].pass)
+		console.log(validPass)
 
 		if (!validPass) throw new Error('Incorrect user or password');
 
@@ -50,10 +45,18 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
 			meta: { msg: "some message" }
 		}, tempAppSecret, { expiresIn: '15m'})
 
-		res.header("token", token).send({"token": token})
-	} catch (err) { next(err) }
-});
 
+		done(null,{user:{
+			email: email,
+			token: token
+		}})
+		// res.header("token", token).send({"token": token})
+	} catch (err) { done(err) }
+
+}));
+
+// use passport local rules and return passport local done(user)
+router.post('/login', passport.authenticate('local'), async (req: Request, res: Response, next: NextFunction) => { res.json(req.user)});
 
 /**
  * Register
@@ -121,3 +124,11 @@ export function authenticatedMiddleware(level: string) {
 	}
 }
 
+
+// passport.use(new JWTStrategy({secretOrKey: tempAppSecret, issuer:"a@a.com", jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()}, (jwt_payload:any, done: Function) => {
+// 	console.log('payload   - ', jwt_payload)
+// 
+// 	done(null, false)
+// }))
+
+export { passport }

@@ -34,7 +34,7 @@ export default function Login() {
 	const LocalAuth = useState("")
 	if (typeof window !== "undefined") LocalAuth.attach(Persistence("auth"));
 
-	const formState = useState({ email: "bob", pass: "bob", isDirty: false })
+	const formState = useState({ email: "bob", password: "bob", isDirty: false })
 
 	// state.from is saved at AuthRedirect
 	let from = location.state?.from?.pathname || '/'
@@ -67,7 +67,7 @@ export default function Login() {
 						</div>
 						<div css={tw`mb-6 pt-3 rounded bg-gray-200`}>
 							<label css={tw`block text-gray-700 text-sm font-bold mb-2 ml-3`} >Password</label>
-					<input type="password"  value={formState.pass.get()} onChange={_handleFormUpdate}  name="pass" css={tw`bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3`} />
+					<input type="password"  value={formState.password.get()} onChange={_handleFormUpdate}  name="password" css={tw`bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3`} />
 						</div>
 						<div css={tw`flex justify-end`}>
 							<a href="#" css={tw`text-sm text-purple-600 hover:text-purple-700 hover:underline mb-6`}>Forgot your password?</a>
@@ -117,12 +117,14 @@ export default function Login() {
 			}
 		})
 		.then( res => {
-			// TODO error handling
+			// @TODO error handling
+			// @TODO handle 400, handle no token, if supply wrong req data,  will give 400
+			// @TODO handle 500
 			if (res.status !== 200) return alert("login error");
 			return res.json()
 		})
 		.then( data => {
-			LocalAuth.set(data.token)
+			LocalAuth.set(data.user.token)
 			globalState.isLoggedin.set(true)
 			backToOriginalUrl()
 		})
