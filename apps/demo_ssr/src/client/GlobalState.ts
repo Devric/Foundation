@@ -1,6 +1,9 @@
 import { createState, useState } from '@hookstate/core'
 
-export default createState(0)
+export default createState({
+	counter: 0,
+	isLoggedin: false
+})
 
 export { useState } from '@hookstate/core'
 

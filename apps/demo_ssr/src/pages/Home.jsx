@@ -79,7 +79,7 @@ export default function Sample() {
 
 					<div css={tw`w-full sm:w-1/2 p-6 mt-6`}> 
 						<div css={tw`text-8xl`}>
-							{state.get()}
+							{state.counter.get()}
 						</div>
 					</div>
 
@@ -90,7 +90,7 @@ export default function Sample() {
 							<h3 css={tw`text-3xl text-gray-800 font-bold leading-none mb-3`}> Global State shared with Secured (secured) page </h3>
 
 							<div>
-								<button css={tw`bg-indigo-400 p-2 text-white rounded-lg`} onClick={() => state.set(p => p + 1)}>Increment</button>
+								<button css={tw`bg-indigo-400 p-2 text-white rounded-lg`} onClick={() => state.counter.set(p => p + 1)}>Increment</button>
 							</div>
 
 						</div>
@@ -400,7 +400,6 @@ export default function Sample() {
 				</div>
 
 				</div>
-
 			</div>
 
 		</footer>

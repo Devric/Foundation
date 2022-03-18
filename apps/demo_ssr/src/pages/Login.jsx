@@ -26,7 +26,7 @@ let styles = {
 }
 
 export default function Login() {
-	const state = useState(GlobalState)
+	const globalState = useState(GlobalState)
 	const navigate = useNavigate()
 	let location = useLocation()
 
@@ -123,6 +123,7 @@ export default function Login() {
 		})
 		.then( data => {
 			LocalAuth.set(data.token)
+			globalState.isLoggedin.set(true)
 			backToOriginalUrl()
 		})
 	}

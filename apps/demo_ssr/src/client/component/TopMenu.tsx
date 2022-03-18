@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import tw, { css } from 'twin.macro'
-import { Link, Routes, Route } from 'react-router-dom'
+import { Link, Routes, Route, useNavigate} from 'react-router-dom'
+import GlobalState, {useState} from '../GlobalState'
 
 let styles = {
 	header: css`
@@ -18,11 +19,16 @@ let styles = {
 interface iRoutes {
 	name: string
 	path: string
-	component: JSX.Element
-	secured: string
+	component: any
+	secured: boolean
 }
 
-export default function TopMenu({routes, isLoggedin=false}:{routes:iRoutes[], isLoggedin:boolean}) {
+// refect the authState, ideally thiss component should not know how to operate auth
+export default function TopMenu({routes, authState}:{routes:iRoutes[], authState:any}) {
+	let globalState = useState(GlobalState)
+	var navigate = useNavigate()
+
+	// TODO refactor login/logout link
 	return (
 		<nav id="header" css={tw`fixed w-full z-30 top-0 text-white`}>
 
@@ -49,12 +55,21 @@ export default function TopMenu({routes, isLoggedin=false}:{routes:iRoutes[], is
 					<ul css={tw`lg:flex justify-end flex-1 items-center`}>
 
 						{routes.map(({ name, path }, i) => {
-							// TODO replace Login link with logout link 
-							return (
-								<li css={tw`mr-3`}  key={i}>
-									<Link to={path} css={tw`inline-block py-2 px-4 text-black font-bold no-underline`}> {name} </Link>
-								</li>
-							)
+							// TODO isLoggedin is hacky, need a better solution
+							if(name==="Login" && ( globalState.isLoggedin.get() || authState?.get().length )){
+								return (
+									<li css={tw`mr-3`}  key={i}>
+										<button onClick={handleLogout} css={tw`inline-block py-2 px-4 text-black font-bold no-underline`}> Logout </button>
+									</li>
+								)
+							}  else {
+								return (
+									<li css={tw`mr-3`}  key={i}>
+										<Link to={path} css={tw`inline-block py-2 px-4 text-black font-bold no-underline`}> {name} </Link>
+									</li>
+								)
+							}
+
 						})}
 
 					</ul>
@@ -73,4 +88,10 @@ export default function TopMenu({routes, isLoggedin=false}:{routes:iRoutes[], is
 
 		</nav>
 	)
+
+	function handleLogout() {
+		authState.set("")
+		globalState.isLoggedin.set(false)
+		navigate('/', {replace:true})
+	}
 }

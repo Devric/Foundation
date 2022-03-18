@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { QueryClient, QueryClientProvider} from 'react-query'
 import { Link, Routes, Route } from 'react-router-dom'
 import tw, { css } from 'twin.macro'
 import GlobalStyles from './client/GlobalStyles'
+import { useState, Persistence } from './client/GlobalState'
 
 import TopMenu from './client/component/TopMenu'
 import AuthRedirect from './client/component/AuthRedirect'
@@ -55,12 +56,15 @@ let styles = {
 }
 
 export function App() {
+	const LocalAuth = useState("")
+	if (typeof window !== "undefined") LocalAuth.attach(Persistence("auth"));
+
 	return (
 		<>
 			<GlobalStyles />
 			<QueryClientProvider client={queryClient}>
 				<header css={tw`container h-24`}>
-					<TopMenu routes={orderedRoutes} />
+					<TopMenu routes={orderedRoutes} authState={LocalAuth} />
 				</header>
 				<Routes>
 					{routes.map(({ path, secured, component: RouteComp }) => {

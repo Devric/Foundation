@@ -28,9 +28,9 @@ export default function Secured() {
 				</div>
 				<div css={styles.heroRight}>
 					<p css={tw`text-center text-8xl`}>
-						{globalState.get()}
+						{globalState.counter.get()}
 					</p>
-					<button css={tw`bg-indigo-400 p-2 text-white rounded-lg`} onClick={() => globalState.set(p => p + 1)}>Add</button>
+					<button css={tw`bg-indigo-400 p-2 text-white rounded-lg`} onClick={() => globalState.counter.set(p => p + 1)}>Add</button>
 				</div>
 			</div>
 		</div>
