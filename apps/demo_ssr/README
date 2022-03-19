@@ -42,3 +42,10 @@ quik template to start with React SSR with VITE and tailwind
 - intergrate ux 
 - Fix jest testing
 - Add Playwright e2e
+
+### NOTE
+
+- dev runner : "nodemon --watch src/api/**/* --exec node --inspect -r ts-node/register server.ts",
+	-- nodemon watches change in api folder and restarts server
+	-- we run node --inspect for debugging connection to chrome inspector plugin
+	-- running ts through node need to use ts-node/register to enable esnext features

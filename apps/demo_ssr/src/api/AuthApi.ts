@@ -19,6 +19,22 @@ const userDb = DB('user')
 
 class NotFoundError extends Error {}
 
+// passport.authenticate('jwt'....) -- already validates jwt based on the options specified here
+// we can do additional thing if requried
+passport.use(new JWTStrategy(
+	{
+		secretOrKey: tempAppSecret,
+		// issuer:"a@a.com",
+		jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+	}, 
+	(jwt_payload:any, done: Function) => {
+		console.log('payload   - ', jwt_payload)
+		done(null, true)
+	}
+))
+
+export { passport }
+
 /**
  * Login
  * ==================================
@@ -95,39 +111,46 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
 });
 
 
+router.post('/verify', passport.authenticate('jwt', { session: false}), (req:any,res:any)=>{
+	res.status(200).send("ok")
+})
+
+
 export default router;
 
 interface UserRequest extends Request{
 	user: string
 }
 
-// middleware for other routes to verify if jwt user has permission
-export function authenticatedMiddleware(level: string) {
-	return function (req: UserRequest,res: Response,next: Function) {
-		let token = req.header("Authorization")
-		if (!token) return res.status(401).send("Access Denied")
+// middleware for other {API} routes to verify if jwt user has permission
+export function authoriseMiddleware(level: string) {
+	return function authorise(req: Request, res: Response, next: NextFunction) {
+		// let token = req.header("Authorization")
+		// if (!token) return res.status(401).send("Access Denied")
 
-		try {
-			if (token.startsWith('Bearer ')) token = token.slice(7, token.length).trimLeft();
+		// try {
+		// 	if (token.startsWith('Bearer ')) token = token.slice(7, token.length).trimLeft();
 
-			const verified = jwt.verify(token, tempAppSecret)
+		// 	const verified = jwt.verify(token, tempAppSecret)
 
-			// check user permission
-			let isAdmin = level === 'admin'
+		// 	// check user permission
+		// 	let isAdmin = level === 'admin'
 
-			req.user = "verified user"
-			next()
-		} catch (err) {
-			return res.status(400).send("Invalid user permission")
-		}
+		// 	req.user = "verified user"
+		// 	next()
+		// } catch (err) {
+		// 	return res.status(400).send("Invalid user permission")
+		// }
+		console.log("permission check for: " + level )
+
+		next()
 	}
 }
 
+export function jwtRefreshMiddleware(req: Request,res:Response,next: NextFunction) {
+	//@TODO refresh JWT
+	console.log(req.headers?.authorization)
+	console.log("refresh jwt here")
+	next()
+}
 
-// passport.use(new JWTStrategy({secretOrKey: tempAppSecret, issuer:"a@a.com", jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()}, (jwt_payload:any, done: Function) => {
-// 	console.log('payload   - ', jwt_payload)
-// 
-// 	done(null, false)
-// }))
-
-export { passport }
