@@ -3,7 +3,6 @@ import { createSignal, onMount, For } from "solid-js";
 import Cart from "solidCart/Cart"
 
 export default function Catalog() {
-console.log(Cart)
 	const [photos, setPhotos] = createSignal([]);
 	const images = [
 		'https://burst.shopifycdn.com/photos/blue-t-shirt.jpg?width=373&format=pjpg&exif=1&iptc=1',

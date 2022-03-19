@@ -39,4 +39,3 @@ export function mountCart(el:any) {
 	render(() => <Catalog />, el);
 }
 
-
