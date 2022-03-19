@@ -3,8 +3,7 @@
 	"private": true,
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "nodemon --watch src/api/**/* --exec ts-node server.ts",
-		"inspect": "node --inspect -r ts-node/register server.ts",
+		"dev": "nodemon --watch src/api/**/* --exec node --inspect -r ts-node/register server.ts",
 		"build": "npm run build:client && npm run build:server",
 		"build:client": "vite build --outDir dist/client",
 		"build:server": "vite build --ssr src/entry-server.jsx --outDir dist/server",
