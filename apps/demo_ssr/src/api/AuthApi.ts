@@ -35,7 +35,6 @@ passport.use(new localStrategy({
 
 		// check user password
 		const validPass = await bcrypt.compare(password, dbUser[0].pass)
-		console.log(validPass)
 
 		if (!validPass) throw new Error('Incorrect user or password');
 
