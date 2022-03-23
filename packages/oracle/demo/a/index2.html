@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	window 2
+	<!--
+	<iframe src="http://127.0.0.1:4445/index3.html" frameborder="0"></iframe>
+	-->
+	<script src="http://127.0.0.1:4446/index.js"></script>
+	<script>
+		var Oracle = new window.Oracle()
+		Oracle.register({
+			host: "http://127.0.0.1:4444",
+			module: "cart",
+			actions: ["purchase", "clear"]
+		})
+
+		// new subscription overwrites last subscription
+		Oracle.subscribe((event) => {
+			// if (event.data.module === 'host') return
+			console.log("cart listner")
+			console.log(event.data)
+		})
+
+		// Oracle.unsubscribe()
+		Oracle.dispatch({"action": "purchase","value": "1"})
+		Oracle.dispatch({"action": "clear"})
+	</script>
+</body>
+</html>

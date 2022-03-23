@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	window 1
+	<iframe src="http://127.0.0.1:4444/index2.html" frameborder="0"></iframe>
+	<iframe src="http://127.0.0.1:4445/index3.html" frameborder="0"></iframe>
+	<script src="http://127.0.0.1:4446/index.js"></script>
+	<script>
+		// ===================
+		var Oracle = new window.Oracle()
+		Oracle.createHost(['http://127.0.0.1:4444','http://127.0.0.1:4445'])
+
+		Oracle.register({
+			host: "http://127.0.0.1:4444",
+			module: "host",
+			actions: ["login", "logout"]
+		})
+
+		// new subscription overwrites last subscription
+		Oracle.subscribe((event) => {
+			// if (event.data.module === 'host') return
+			console.log("host listner")
+			console.log(event.data)
+		})
+
+		// Oracle.unsubscribe()
+		Oracle.dispatch({"action": "getItem","value": "1"})
+		Oracle.dispatch({"action": "doThings","value": "1"})
+	</script>
+</body>
+</html>

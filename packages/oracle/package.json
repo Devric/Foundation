@@ -1,0 +1,18 @@
+{
+	"name": "oracle",
+	"version": "1.0.0",
+	"description": "Browser Window pubsub for MFE",
+	"main": "index.js",
+	"types": "index.d.ts",
+	"scripts": {
+		"demo": "concurrently 'http-server --cors -p 4444 demo/a' 'http-server --cors -p 4445 demo/b' 'http-server -p 4446'",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Devric",
+	"license": "ISC",
+	"devDependencies": {
+		"concurrently": "^7.0.0",
+		"jest": "^27.5.1",
+		"nodemon": "^2.0.15"
+	}
+}
