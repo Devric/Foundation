@@ -2,10 +2,10 @@
 	"name": "oracle",
 	"version": "1.0.0",
 	"description": "Browser Window pubsub for MFE",
-	"main": "index.js",
-	"types": "index.d.ts",
+	"main": "Oracle.ts",
 	"scripts": {
-		"demo": "concurrently 'http-server --cors -p 4444 demo/a' 'http-server --cors -p 4445 demo/b' 'http-server -p 4446'",
+		"build": "concurrently 'tsc --watch' 'tsc -p tsconfig.browser.json --watch'",
+		"demo": "concurrently 'http-server --cors -p 4444 demo/a' 'http-server --cors -p 4445 demo/b' 'http-server --cors -p 4446 ./dist.browser'",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Devric",

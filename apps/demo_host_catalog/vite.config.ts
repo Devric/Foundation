@@ -5,6 +5,7 @@ import federation from "@originjs/vite-plugin-federation";
 
 export default defineConfig({
 	server:{
+		port: 8887,
 		cors: {
 			"origin": "*",
 			"methods": "GET,HEAD,PUT,PATCH,POST,DELETE",

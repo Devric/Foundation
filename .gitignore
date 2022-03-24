@@ -5,3 +5,5 @@ dist/**
 .pnpm-debug.log
 test.db
 user.db
+dist.browser
+dist

@@ -3,6 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
+	<script type="module" src="http://127.0.0.1:4446/Oracle.js"></script>
+	<script>
+		var doFunction;
+	</script>
 </head>
 	<body>window 3</body>
 	<!--
@@ -10,28 +14,30 @@
 	-->
 
 	<input id="clickMe" type="button" value="clickme" onclick="doFunction();" />
-	<script src="http://localhost:4446/index.js"></script>
+
 	<script>
-		var Oracle = new window.Oracle()
-		Oracle.register({
-			host: "http://127.0.0.1:4444",
-			module: "catalog",
-			actions: ["navigate", "refresh"]
-		})
+		document.addEventListener("DOMContentLoaded", function(event) {
+			var Oracle = new window.Oracle()
+			Oracle.register({
+				host: "http://127.0.0.1:4444",
+				module: "catalog",
+				actions: ["navigate", "refresh"]
+			})
 
-		// new subscription overwrites last subscription
-		Oracle.subscribe((event) => {
-			// if (event.data.module === 'host') return
-			console.log("catalog listner")
-			console.log(event.data)
-		})
+			// new subscription overwrites last subscription
+			Oracle.subscribe((event) => {
+				// if (event.data.module === 'host') return
+				console.log("catalog listner")
+				console.log(event.data)
+			})
 
-		// Oracle.unsubscribe()
-		Oracle.dispatch({"action": "navigate","value": "1"})
+			// Oracle.unsubscribe()
+			Oracle.dispatch({"action": "navigate","value": "1"})
 
-		// window.top.postMessage({"type":"register","module":"catalog", "actions": "getItem","value": "1"}, "http://127.0.0.1:4444")
-		function doFunction(){
-			Oracle.dispatch({"action": "refresh"})
-		}
+			// window.top.postMessage({"type":"register","module":"catalog", "actions": "getItem","value": "1"}, "http://127.0.0.1:4444")
+			doFunction = () => {
+				Oracle.dispatch({"action": "refresh"})
+			}
+  		});
 	</script>
 </html>
