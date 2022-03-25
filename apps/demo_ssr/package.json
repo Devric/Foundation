@@ -10,12 +10,14 @@
 		"generate": "vite build --outDir dist/static && npm run build:server && node prerender",
 		"serve": "cross-env NODE_ENV=production node server",
 		"debug": "node --inspect-brk server",
-		"seed": "ts-node ./__tests__/seed.ts"
+		"seed": "ts-node ./__tests__/seed.ts",
+		"startFederation": "pnpm dev"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.8.2",
 		"@hookstate/core": "^3.0.13",
 		"@hookstate/persistence": "^3.0.0",
+		"Oracle": "workspace:*",
 		"bcrypt": "^5.0.1",
 		"body-parser": "^1.19.2",
 		"joi": "^17.6.0",

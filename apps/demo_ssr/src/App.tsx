@@ -25,7 +25,7 @@ const routes = Object.keys(pages).map((path) => {
 })
 
 // reorder routes based on the below array so that we can list in auto generated navigation
-const orderedRoutes = ['Home', 'Ajax', 'Secured', 'Layout', 'Login'].map((name:string)=> routes.filter(route => route.name === name)[0])
+const orderedRoutes = ['Home', 'Shop', 'Secured', 'Layout', 'Login'].map((name:string)=> routes.filter(route => route.name === name)[0])
 
 let styles = {
 	nav: css`
