@@ -2,34 +2,43 @@ export interface global {}
 
 interface topWindow extends Window{}
 
-interface iModule {
-	module: string
-	actions: string[]
+type tModule = {
+	module: string,
+	actions: string[],
 	origin: string
-	host?: string
 }
 
 type tEventData = {
-	module: string;
-	action: string;
-	value: any;
+	action: string,
+	value: any,
+	meta?: any
+}
+
+type tRegisterData = {
+	module: string,
+	actions: string[],
+	host: string
+}
+
+export class Oracle {
+constructor();
+	#host: string
+	#allowedOrigins: string[]
+	#module: string
+	#modules: tModule[]
+	#subscribeHandler: {(event: MessageEvent) : void}
+
+	createHost(origins: string[]): void;
+	register(registerOpt: tRegisterData): void;
+	dispatch(obj: tEventData): void;
+	subscribe(handler: Function): void;
+	unsubscribe(): void;
+	displayModules(): any;
 }
 
 declare global {
 	interface Window {
-		Oracle: any
-		top: Window
-	}
-
-	class Oracle{
-		constructor();
-		createHost(origins: string[]): void;
-		register(registerOpt: iModule): void;
-		publish(obj: tEventData): void;
-		subscribe(handler: Function): void;
-		unsubscribe(): void;
-		displayModules(): any;
+		Oracle: any;
 	}
 }
-
 

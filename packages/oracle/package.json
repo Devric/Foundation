@@ -1,8 +1,10 @@
 {
-	"name": "oracle",
-	"version": "1.0.0",
+	"name": "Oracle",
+	"version": "0.0.1",
 	"description": "Browser Window pubsub for MFE",
 	"main": "Oracle.ts",
+	"type": "node",
+	"types": "./types/global.d.ts",
 	"scripts": {
 		"build": "concurrently 'tsc --watch' 'tsc -p tsconfig.browser.json --watch'",
 		"demo": "concurrently 'http-server --cors -p 4444 demo/a' 'http-server --cors -p 4445 demo/b' 'http-server --cors -p 4446 ./dist.browser'",

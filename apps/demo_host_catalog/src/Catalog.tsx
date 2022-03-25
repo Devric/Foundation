@@ -1,8 +1,10 @@
 import './style.css'
 import { createSignal, onMount, For } from "solid-js";
 import Cart from "solidCart/Cart"
+import { Oracle } from 'Oracle'
 
 export default function Catalog() {
+	let oracle;
 	const [photos, setPhotos] = createSignal([]);
 	const images = [
 		'https://burst.shopifycdn.com/photos/blue-t-shirt.jpg?width=373&format=pjpg&exif=1&iptc=1',
@@ -21,6 +23,21 @@ export default function Catalog() {
 		const res = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=10`);
 		setPhotos(await res.json().then(items => items.map(( item:any, i:number )=> { item.thumbnailUrl = images[i]; return item } )));
 
+		oracle = new Oracle();
+		oracle.createHost(['http://127.0.0.1:8887', 'http://127.0.0.1:8888'])
+		oracle.register({
+			host: "http://127.0.0.1:8887",
+			module: "catalog",
+			actions: ['refresh', 'addProduct', 'removeProduct']
+		})
+
+		oracle.subscribe((event:MessageEvent)=>{
+			console.log("catalog listner")
+			console.log(event.data)
+		})
+
+		oracle.dispatch({"action": "getItem","value": "1"})
+		oracle.dispatch({"action": "doThings","value": "1"})
 
 		// TODO fix the pnpm build issue because it cant not find type
 		// move Cart to a bootstrap function from remote app

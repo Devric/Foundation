@@ -63,11 +63,11 @@ type tEventData = {
 
 type tRegisterData = {
 	module: string,
-	actions: string,
+	actions: string[],
 	host: string
 }
 
-export default class Oracle {
+export class Oracle {
 	#host: string = ""
 	#allowedOrigins: string[] = []
 	#module: string = ""
@@ -171,5 +171,10 @@ export default class Oracle {
 	}
 }
 
+export default Oracle
 window.Oracle = Oracle
+
+// this module exported both default and named export, due to typescript import error
+// - export default class Oracle
+// - export class Oracle
 
