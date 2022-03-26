@@ -1,8 +1,10 @@
 // Producer
 console.log('producer')
 
-let kafka = require('../kafka').default
-let eventType = require('../eventType').default
+const kafka = require('../kafka').default
+const eventType = require('../eventType').default
+const registerSchema = require('../SchemaRegistry').default
+const createTopic = require('../createTopic').default
 
 const producer = kafka.producer()
 
@@ -10,17 +12,17 @@ const run = async () => {
 	// Producing
 	await producer.connect()
 
-	const event = {
-		kind: "DOG",
-		name: "Wally"
-	}
-
+	await createTopic()
+	// await registerSchema('./AnimalSchema.avsc');
 
 	setInterval(async ()=>{
 		await producer.send({
 			topic: 'test',
 			messages: [
-				{ value: 'Hello KafkaJS user!' },
+				{
+					value: eventType.toBuffer({kind: 'CAT', name: 'Albert'})
+				}
+				, // {kind: 'DOG', name: 'Wally'}
 			],
 		})
 	}, 3000)

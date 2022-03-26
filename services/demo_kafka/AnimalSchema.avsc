@@ -1,0 +1,9 @@
+{
+	"type": "record",
+	"name": "Animal",
+	"namespace": "Zoo",
+	"fields": [
+		{"name": "kind", "type": {"name":"kind", "type": "enum", "symbols": ["CAT", "DOG"]}},
+		{"name": "name", "type": "string"}
+	]
+}

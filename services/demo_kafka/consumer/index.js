@@ -1,7 +1,8 @@
 // Consumer
 console.log('consumer')
 
-let kafka = require('../kafka').default
+const kafka = require('../kafka').default
+const eventType = require('../eventType').default
 
 const consumer = kafka.consumer({ groupId: 'test-group' })
 
@@ -12,10 +13,13 @@ const run = async () => {
 
 	await consumer.run({
 		eachMessage: async ({ topic, partition, message }) => {
+			console.log(
+				eventType.fromBuffer(message.value)
+			)
 			console.log({
 				partition,
 				offset: message.offset,
-				value: message.value.toString(),
+				// value: message.value.toString(),
 			})
 		},
 	})
