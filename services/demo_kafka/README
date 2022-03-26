@@ -1,1 +1,25 @@
+## Manage kafka
+
+### start Kafka
+#### manually: (not tested)
+zookeeper-server-start ./config/server.properties
+kafka-server-start ./config/server.properties
+
+#### docker
 docker-compose up
+
+### create topic
+
+docker exec -it kafka /opt/bitnami/kafka/bin/kafka-topics.sh \
+			--create \
+			--bootstrap-server localhost:9092 \
+			--replication-factor 1 \
+			--partitions 1 \
+			--topic test
+
+
+### start producer
+
+docker exec -it kafka /opt/bitnami/kafka/bin/kafka-producers.sh \
+			--broker-list localhost:9092 
+			--topic test
