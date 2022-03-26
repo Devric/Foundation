@@ -1,0 +1,19 @@
+{
+	"name": "demo_kafka",
+	"version": "1.0.0",
+	"description": "### start Kafka #### manually: (not tested) zookeeper-server-start ./config/server.properties kafka-server-start ./config/server.properties",
+	"main": "index.js",
+	"scripts": {
+		"start:producer": "node ./producer/index.js",
+		"start:consumer": "node ./consumer/index.js",
+		"demo": "concurrently 'node ./producer/index.js' 'node ./consumer/index.js'",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Devric",
+	"license": "ISC",
+	"dependencies": {
+		"avsc": "^5.7.3",
+		"concurrently": "^7.0.0",
+		"kafkajs": "^1.16.0"
+	}
+}
