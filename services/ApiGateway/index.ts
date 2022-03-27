@@ -2,6 +2,7 @@ import express from 'express'
 import helmet from 'helmet'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import LoadBalancer from './LoadBalancer'
+import morgan from 'morgan'
 
 const app = express()
 const port = 3040
@@ -9,6 +10,9 @@ const port = 3040
 
 app.use(express.json())
 app.use(helmet())
+
+// TODO decide on using pino express-pino-logger
+app.use(morgan('combined'))
 
 let registry = {
 	'/posts': {
