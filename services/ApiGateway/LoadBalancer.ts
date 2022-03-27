@@ -14,6 +14,9 @@ class LoadBalancer {
 		}
 		return services[target]
 	}
+
+	// TODO IP
+	// TODO Geo
 }
 
 export default LoadBalancer
