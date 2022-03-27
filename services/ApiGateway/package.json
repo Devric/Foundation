@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.ts",
 	"scripts": {
-		"dev": "concurrently 'nodemon index.ts' 'json-server --watch test/test-json-api.json --port 9999'",
+		"dev": "concurrently 'nodemon index.ts' 'json-server --watch test/test-json-api.json --port 9999' 'json-server --watch test/test-json-api.json --port 9998'",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Devric",

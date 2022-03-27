@@ -1,6 +1,7 @@
 import express from 'express'
 import helmet from 'helmet'
 import { createProxyMiddleware } from 'http-proxy-middleware'
+import LoadBalancer from './LoadBalancer'
 
 const app = express()
 const port = 3040
@@ -11,9 +12,11 @@ app.use(helmet())
 
 let registry = {
 	'/posts': {
-		targets: [ 'http://localhost:9999' ]
+		strategy: 'ROUND_ROBIN',
+		targets: [ 'http://localhost:9999', 'http://localhost:9998' ]
 	},
 	'/comments':{
+		strategy: 'ROUND_ROBIN',
 		targets: [ 'http://localhost:9999' ]
 	}
 }
@@ -21,8 +24,11 @@ let registry = {
 
 // forward by registry
 for (const [key,val] of Object.entries(registry)){
+	var LB = new LoadBalancer()
+
 	app.use(key, (req, res,next)=>{
-		createProxyMiddleware(val.targets[0])(req,res,next)
+		let target = LB.ROUND_ROBIN(val.targets)
+		createProxyMiddleware(target)(req,res,next)
 	})
 
 	//app.use('/posts', createProxyMiddleware('http://localhost:9999'))
