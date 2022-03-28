@@ -34,6 +34,8 @@ class BetAmountCommandHandler implements ICommandHandler<BetAmountCommand, BetPl
         if(number > 52) event.won = true
         else event.won = false
 
+		console.log(`2 Commnad Handler reduces the command event: produce newReducedEvent`)
+		console.log(event)
         return event;
     }
 
@@ -41,6 +43,7 @@ class BetAmountCommandHandler implements ICommandHandler<BetAmountCommand, BetPl
 
 class BetPlacedProjector implements IProjector<BetPlacedEvent, UserMoneyState>{
     async project(currentState: UserMoneyState, event: BetPlacedEvent): Promise<UserMoneyState> {
+		console.log(`4 Projecting new state, recieve both currentState, newEvent: and output newState `)
         const newState: UserMoneyState = {
             index: currentState.index +1,
             money: event.won? currentState.money+event.amountBet: currentState.money-event.amountBet
@@ -54,6 +57,8 @@ class BetPlacedProjector implements IProjector<BetPlacedEvent, UserMoneyState>{
 class LocalEventStore implements IEventStore{
     private store : any = {}
     async publish(event: IEvent): Promise<boolean> {
+		console.log(`6 EventStore publishes the newReducedEvent from step 2`)
+		console.log(event)
         this.store[event.version] = event
 
         return true
@@ -67,9 +72,13 @@ class BetService extends EventBasedService<BetAmountCommand,BetPlacedEvent,UserM
         super(new BetAmountCommandHandler(), new BetPlacedProjector(), new LocalEventStore())
     }
 
-    protected async  updateState(_: UserMoneyState): Promise<void> { }
+    protected async  updateState(_: UserMoneyState): Promise<void> { 
+		console.log(`5 Service triggers updateState and recieves newState. Does not output`)
+		console.log(_)
+	}
 
     protected async getCurrentState(_: BetPlacedEvent): Promise<UserMoneyState> {
+		console.log(`3 Service gets currentState with new reduced event passed in here: `)
         return {
             index: 0,
             money: 0
@@ -87,6 +96,8 @@ const command:BetAmountCommand = {
     id: "AmountBetBTC"
 }
 
+console.log(`1 Service Executes Command`)
 service.execute(command).then(result => {
+	console.log(`7 Service.execute resiive result of new State from step 4 projection`)
     console.log(result)
 })
