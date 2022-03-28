@@ -101,3 +101,5 @@ service.execute(command).then(result => {
 	console.log(`7 Service.execute resiive result of new State from step 4 projection`)
     console.log(result)
 })
+
+// Service.Execute(Command) → CommandHandler → Service.getCurrentState → Projector → Service.updateState → LocalStore → Return result to Service.execute(command)
