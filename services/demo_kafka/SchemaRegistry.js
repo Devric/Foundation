@@ -4,7 +4,7 @@ const registry = new SchemaRegistry({
   host: "http://localhost:8085",
 });
 
-const registerSchema = async (avsc="./Schema.avsc") => {
+const registerSchema = async (avsc) => {
 	try {
 		const schema = await readAVSCAsync(avsc);
 
@@ -20,13 +20,13 @@ const registerSchema = async (avsc="./Schema.avsc") => {
 }
 
 async function run() {
-	// let x = await registerSchema('./AnimalSchema.avsc');
-	// console.log(x)
-	var buf = await registry.encode(143, {"kind":"CAT", "name":"wally"})
-	var val = await registry.decode(buf)
+	let x = await registerSchema('./AnimalSchema.avsc');
+	console.log(x)
+	// var buf = await registry.encode(143, {"kind":"CAT", "name":"wally"})
+	// var val = await registry.decode(buf)
 
-	console.log(buf)
-	console.log(val)
+	// console.log(buf)
+	// console.log(val)
 
 
 	// get ID by subject

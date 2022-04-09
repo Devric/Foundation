@@ -2,5 +2,10 @@
 	"type": "record",
 	"name": "RandomTest",
 	"namespace": "examples",
-	"fields": [{ "type": "string", "name": "fullName" }]
+	"fields": [
+		{ 
+			"type": "string",
+			"name": "fullName" 
+		}
+	]
 }

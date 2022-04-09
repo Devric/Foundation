@@ -13,3 +13,7 @@ Starting Foudation Mono Repo
 		exclude file is the same as .gitignore, however it will not be pushed to the central repo
 		after pulling work repos eg: apps/workApp, you can ignore it from the foundation exclude and have a separete git repo
 
+
+
+#TODO service mesh
+https://faun.pub/building-your-very-own-service-mesh-4723895d061d

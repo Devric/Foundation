@@ -15,17 +15,18 @@ const run = async () => {
 	await createTopic()
 	// await registerSchema('./AnimalSchema.avsc');
 
+	let num = 0
 	setInterval(async ()=>{
 		await producer.send({
 			topic: 'test',
 			messages: [
 				{
-					value: eventType.toBuffer({kind: 'CAT', name: 'Albert'})
+					value: eventType.toBuffer({kind: 'CAT', name: `Albert-${++num}`})
 				}
 				, // {kind: 'DOG', name: 'Wally'}
 			],
 		})
-	}, 3000)
+	}, 100)
 }
 
 run().catch(console.error)

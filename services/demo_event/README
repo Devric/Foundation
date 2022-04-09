@@ -1,0 +1,3 @@
+- EntryPoint
+-- express GET query / POST command
+-- subscribing kafka topic (choreography-saga hybrid)

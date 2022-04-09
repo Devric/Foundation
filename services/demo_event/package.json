@@ -1,0 +1,34 @@
+{
+	"name": "demo_event",
+	"version": "0.0.1",
+	"description": "",
+	"exports": "index.js",
+	"type": "module",
+	"scripts": {
+		"demo": "nodemon --exec node --experimental-specifier-resolution=node --loader ts-node/esm demo.ts",
+		"demo3": "nodemon demo3/app.ts",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"es": "node --experimental-specifier-resolution=node --loader ts-node/esm esdb.ts"
+	},
+	"keywords": [],
+	"author": "Devric",
+	"license": "ISC",
+	"nodemon": {
+		"watch": [
+			"demo.ts",
+			"core"
+		]
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.21",
+		"nodemon": "^2.0.15",
+		"ts-node": "^10.7.0",
+		"typescript": "^4.6.3"
+	},
+	"dependencies": {
+		"@eventstore/db-client": "^3.3.1",
+		"esaucy": "^2.0.2",
+		"express": "^4.17.1",
+		"suretype": "^3.0.3"
+	}
+}

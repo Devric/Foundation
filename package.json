@@ -9,7 +9,7 @@
 		"demo": "pnpm turbo run startFederation",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"author": "Billy Huang",
+	"author": "Devric",
 	"license": "ISC",
 	"packageManager": "pnpm@6.32.3",
 	"dependencies": {

@@ -2,38 +2,38 @@ version: "3.0"
 
 services:
 
-  worker:
-    image: tlberglund/kafka-workshop-worker
-    environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-    depends_on:
-      - kafka
-    command: "bash -c 'sleep infinity'"
-    volumes: 
-      - $PWD/worker/data:/data
+  # worker:
+  #   image: tlberglund/kafka-workshop-worker
+  #   environment:
+  #     KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  #   depends_on:
+  #     - kafka
+  #   command: "bash -c 'sleep infinity'"
+  #   volumes: 
+  #     - $PWD/worker/data:/data
 
-  ksql-cli:
-    image: confluentinc/cp-ksql-cli:5.1.2
-    depends_on:
-      - ksql-server
+  # ksql-cli:
+  #   image: confluentinc/cp-ksql-cli:5.1.2
+  #   depends_on:
+  #     - ksql-server
 
-  ksql-server:
-    image: confluentinc/cp-ksql-server:5.1.2
-    ports:
-      - 8088:8088
-    depends_on:
-      - kafka
-      - zookeeper
-      - schemaregistry
-    environment:
-      KSQL_BOOTSTRAP_SERVERS: kafka:9092
-      KSQL_LISTENERS: http://0.0.0.0:8088
-      KSQL_KSQL_SERVICE_ID: kafka_workshop
-      KSQL_CUB_KAFKA_TIMEOUT: 300
-      KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schemaregistry:8085
-      KSQL_KSQL_COMMIT_INTERVAL_MS: 2000
-      KSQL_KSQL_CACHE_MAX_BYTES_BUFFERING: 10000000
-      KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
+  # ksql-server:
+  #   image: confluentinc/cp-ksql-server:5.1.2
+  #   ports:
+  #     - 8088:8088
+  #   depends_on:
+  #     - kafka
+  #     - zookeeper
+  #     - schemaregistry
+  #   environment:
+  #     KSQL_BOOTSTRAP_SERVERS: kafka:9092
+  #     KSQL_LISTENERS: http://0.0.0.0:8088
+  #     KSQL_KSQL_SERVICE_ID: kafka_workshop
+  #     KSQL_CUB_KAFKA_TIMEOUT: 300
+  #     KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schemaregistry:8085
+  #     KSQL_KSQL_COMMIT_INTERVAL_MS: 2000
+  #     KSQL_KSQL_CACHE_MAX_BYTES_BUFFERING: 10000000
+  #     KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
        
   zookeeper:
     image: confluentinc/cp-zookeeper:5.1.2
