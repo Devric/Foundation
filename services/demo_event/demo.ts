@@ -1,4 +1,4 @@
-import { Mediator, Command, ICommandHandler, IMediatorMiddleware, AbstractBaseCommand, Entity } from "./core/CQRS.Index"
+import { Commands, Command, ICommandHandler, IMediatorMiddleware, AbstractBaseCommand, Entity } from "./core/CQRS.Index"
 import { v, TypeOf, compile } from 'suretype'
 
 type tCartProp = {
@@ -233,18 +233,17 @@ class LoggingMiddleware implements IMediatorMiddleware {
 	}
 }
 
-let m:Mediator = new Mediator()
-m.Use(new LoggingMiddleware)
+Commands.Use(new LoggingMiddleware)
 
-m.subscribe('a',(message:string, payload:any) => {
+Commands.Subscribe('a',(message:string, payload:any) => {
 	console.log("SAGA:" + message)
 })
 
 
 // entry trigger
-m.Send( ADD_CART.Command    , { id:"asdf"    , ip: 45604560 , products: { "sku-123":5 } } as tCart)
-m.Send( ADD_CART.Command    , { id:"asdf"    , ip: 45604560 , products: { "sku-123":5 } } as tCart)
-m.Send( Billing.Command     , {"asdf":4560})
-m.Send( ADD_CART.Command    , { id:"asdf"    , ip: 45604560 , products: { "sku-123":5 } } as tCart)
-m.Send( REMOVE_CART.Command , { id:"asdf"    , ip: 45604560 , products: { "sku-123":5 } } as tCart)
+Commands.Exec( ADD_CART.Command    , { id:"asdf"    , ip: 45604560 , products: { "sku-123":5 } } as tCart)
+Commands.Exec( ADD_CART.Command    , { id:"asdf"    , ip: 45604560 , products: { "sku-123":5 } } as tCart)
+Commands.Exec( Billing.Command     , {"asdf":4560})
+Commands.Exec( ADD_CART.Command    , { id:"asdf"    , ip: 45604560 , products: { "sku-123":5 } } as tCart)
+Commands.Exec( REMOVE_CART.Command , { id:"asdf"    , ip: 45604560 , products: { "sku-123":5 } } as tCart)
 

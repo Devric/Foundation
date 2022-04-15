@@ -1,37 +1,25 @@
-import { Container, PubSub } from "./CQRS.Container";
+import { CommandContainer, PubSub } from "./CQRS.Container";
 import { IMediatorMiddleware } from "./CQRS.interface";
 
-export abstract class BaseMediator {
-    public abstract Send(command: string, payload: any): any;
-
-    protected Resolve(command: string): Function {
-        let handlerClass: any = Container.Get(command);
-        let handler: any = new handlerClass();
-
-        return handler;
-    }
-}
-
-export class Mediator extends BaseMediator {
-    private middlewares: IMediatorMiddleware[] = [];
-
-	// send command
-    public Send(command: string, payload: any): any {
-        return this.Process(command, payload);
-    }
+export abstract class Mediator {
+    protected middlewares: IMediatorMiddleware[] = [];
+    public abstract Exec(command: string, payload: any): any;
+    public abstract Subscribe(message:string, cb:Function): void;
 
 	// use middleware
     public Use(middleware: IMediatorMiddleware): void {
         this.middlewares.push(middleware);
     }
 
-	// subscribe completed event
-	public subscribe(message:string, cb:Function): void {
-		PubSub.subscribe(message, cb)
-	}
+    protected Resolve(command: string): Function {
+        let handlerClass: any = CommandContainer.Get(command);
+        let handler: any = new handlerClass();
 
-    private Process(msg: string, payload: any): any {
-        let handler: any = super.Resolve(msg);
+        return handler;
+    }
+
+    protected Process(msg: string, payload: any): any {
+        let handler: any = this.Resolve(msg);
         this.middlewares.forEach(m => m.PreProcess(payload, handler));
 
         try {
@@ -49,3 +37,34 @@ export class Mediator extends BaseMediator {
         return response;
     }
 }
+
+class CommandMediator extends Mediator {
+
+	// send command
+    public Exec(command: string, payload: any): any {
+        return this.Process(command, payload);
+    }
+
+	// subscribe completed event
+	public Subscribe(message:string, cb:Function): void {
+		PubSub.subscribe(message, cb)
+	}
+
+}
+
+class QueryMediator extends Mediator {
+
+	// send Query
+    public Exec(command: string, payload: any): any {
+        return this.Process(command, payload);
+    }
+
+	// subscribe completed event
+	public Subscribe(message:string, cb:Function): void {
+		PubSub.subscribe(message, cb)
+	}
+
+}
+
+export let Commands = new CommandMediator()
+export let Queries = new QueryMediator()
