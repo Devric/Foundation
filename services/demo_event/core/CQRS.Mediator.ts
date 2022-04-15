@@ -1,5 +1,5 @@
-import { Container } from "./Command.Container";
-import { IMediatorMiddleware } from "./Command.interface";
+import { Container, PubSub } from "./CQRS.Container";
+import { IMediatorMiddleware } from "./CQRS.interface";
 
 export abstract class BaseMediator {
     public abstract Send(command: string, payload: any): any;
@@ -15,13 +15,20 @@ export abstract class BaseMediator {
 export class Mediator extends BaseMediator {
     private middlewares: IMediatorMiddleware[] = [];
 
+	// send command
     public Send(command: string, payload: any): any {
         return this.Process(command, payload);
     }
 
+	// use middleware
     public Use(middleware: IMediatorMiddleware): void {
         this.middlewares.push(middleware);
     }
+
+	// subscribe completed event
+	public subscribe(message:string, cb:Function): void {
+		PubSub.subscribe(message, cb)
+	}
 
     private Process(msg: string, payload: any): any {
         let handler: any = super.Resolve(msg);

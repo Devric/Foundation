@@ -15,5 +15,18 @@ Starting Foudation Mono Repo
 
 
 
-#TODO service mesh
-https://faun.pub/building-your-very-own-service-mesh-4723895d061d
+##TODO 
+- service mesh * https://faun.pub/building-your-very-own-service-mesh-4723895d061d | https://istio.io/
+- sidecar      * https://dzone.com/articles/distributed-systems-sidecar-pattern | dapr
+- monitor      * https://signoz.io/
+- lexer/parser * https://www.youtube.com/watch?v=qJaugNyfjEM&list=PLnipdbm4t965ROHrQlxLRcSavCudqq2mz&index=3
+- rbac         * https://www.imperva.com/learn/data-security/role-based-access-control-rbac/
+- code quality * https://www.sonarqube.org/
+- IAM          * https://www.keycloak.org/
+- API gateway  * https://medium.com/geekculture/create-an-api-gateway-using-nodejs-and-express-933d1ca23322
+- AUTOMERGE    * https://automerge.org/
+- time series  * https://questdb.io/
+- UI
+-- map         * https://leafletjs.com/SlavaUkraini/examples.html
+-- grid        * https://github.com/react-grid-layout/react-grid-layout | https://blog.logrocket.com/using-accesscontrol-for-rbac-and-abac-in-node-js/
+

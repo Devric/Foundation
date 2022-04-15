@@ -10,7 +10,7 @@
 		"moduleResolution": "nodenext",
 		"esModuleInterop": true,
 		"noImplicitAny": true,
-		"noUnusedLocals": true,
+		"noUnusedLocals": false,
 		"pretty": true,
 		"strict": true,
 		"alwaysStrict": true,

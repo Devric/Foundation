@@ -1,4 +1,4 @@
-import { Container } from "./Command.Container";
+import { Container } from "./CQRS.Container";
 
 /**
  *  Register Command
@@ -17,3 +17,4 @@ export function Command(message: string): (target: Function) => void {
         Container.Register(message, target);
     };
 }
+
