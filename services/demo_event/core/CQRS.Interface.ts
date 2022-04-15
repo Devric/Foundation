@@ -6,6 +6,12 @@ export interface ICommandHandler<T, K> {
 	emit      : (message : string, payload : any) => void;
 }
 
+export interface IQueryHandler<T, K> {
+    EventLog? : (command : T) => void;
+    Process   : (command : T) => K;
+	emit      : (message : string, payload : any) => void;
+}
+
 // Mediator Middleware
 export interface IMediatorMiddleware {
 	// ctx allows to attaach data
