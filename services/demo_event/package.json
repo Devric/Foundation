@@ -28,6 +28,7 @@
 	"dependencies": {
 		"esaucy": "^2.0.2",
 		"express": "^4.17.1",
-		"suretype": "^3.0.3"
+		"suretype": "^3.0.3",
+		"cqrs": "workspace:*"
 	}
 }

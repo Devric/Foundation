@@ -1,3 +1,9 @@
+/**
+ * Entity
+ *
+ * @category Entity
+ * @subcategory All
+ */
 export abstract class Entity<T> {
 	protected readonly _id: string
 	protected props: T
@@ -21,6 +27,11 @@ export abstract class Entity<T> {
 
 }
 
+/**
+ * UUID
+ *
+ * @Category Utility
+ */
 function uuid() {
     var h=['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
     var k=['x','x','x','x','x','x','x','x','-','x','x','x','x','-','4','x','x','x','-','y','x','x','x','-','x','x','x','x','x','x','x','x','x','x','x','x'];

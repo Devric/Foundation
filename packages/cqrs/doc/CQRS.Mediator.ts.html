@@ -1,0 +1,204 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> CQRS.Mediator.ts</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Aggregate</h2><h3>Classes / Event Sourcing</h3><ul><li><a href="AbstractAggregate.html">AbstractAggregate</a></li></ul></div><div class="category"><h2>Commands</h2><h3>Classes</h3><ul><li><a href="AbstractBaseCommand.html">AbstractBaseCommand</a></li></ul></div><div class="category"><h2>Container</h2><h3>Classes</h3><ul><li><a href="Container.html">Container</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CommandContainer">CommandContainer</a></li><li><a href="global.html#PubSub">PubSub</a></li><li><a href="global.html#QueryContainer">QueryContainer</a></li></ul></div><div class="category"><h2>Decorators</h2><h3>Global</h3><ul><li><a href="global.html#Command">Command</a></li></ul></div><div class="category"><h2>Entity</h2><h3>Classes / All</h3><ul><li><a href="Entity.html">Entity</a></li></ul></div><div class="category"><h2>Mediator</h2><h3>Classes</h3><ul><li><a href="CommandMediator.html">CommandMediator</a></li><li><a href="Mediator.html">Mediator</a></li><li><a href="QueryMediator.html">QueryMediator</a></li></ul></div><div class="category"><h2>Utility</h2><h3>Global</h3><ul><li><a href="global.html#uuid">uuid</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>CQRS.Mediator.ts</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { CommandContainer, PubSub } from "./CQRS.Container";
+import { IMediatorMiddleware } from "./CQRS.interface";
+
+/**
+ * Mediator Base Class
+ *
+ * @Category Mediator
+ */
+export abstract class Mediator {
+    protected middlewares: IMediatorMiddleware[] = [];
+    public abstract Exec(command: string, payload: any): any;
+    public abstract Subscribe(message:string, cb:Function): void;
+
+	// use middleware
+    public Use(middleware: IMediatorMiddleware): void {
+        this.middlewares.push(middleware);
+    }
+
+    protected Resolve(command: string): Function {
+        let handlerClass: any = CommandContainer.Get(command);
+        let handler: any = new handlerClass();
+
+        return handler;
+    }
+
+    protected Process(msg: string, payload: any): any {
+        let handler: any = this.Resolve(msg);
+        this.middlewares.forEach(m => m.PreProcess(payload, handler));
+
+        try {
+            if(handler.Validate)
+                handler.Validate(payload);
+        } catch (ex) {
+            throw ex;
+        }
+
+		// logging
+        if(handler.EventLog) handler.EventLog(payload);
+        
+        let response: any = handler.Process(payload);
+        this.middlewares.reverse().forEach(m => m.PostProcess(payload, response));
+        return response;
+    }
+}
+
+/**
+ * Command Container Signleton
+ *
+ * @Category Mediator
+ */
+class CommandMediator extends Mediator {
+
+	/**
+	 * send command
+	 */
+    public Exec(command: string, payload: any): any {
+        return this.Process(command, payload);
+    }
+
+	// subscribe completed event
+	public Subscribe(message:string, cb:Function): void {
+		PubSub.subscribe(message, cb)
+	}
+
+}
+
+/** 
+ * Query Container Signleton 
+ *
+ * @Category Mediator
+ */
+class QueryMediator extends Mediator {
+
+	// send Query
+    public Exec(command: string, payload: any): any {
+        return this.Process(command, payload);
+    }
+
+	// subscribe completed event
+	public Subscribe(message:string, cb:Function): void {
+		PubSub.subscribe(message, cb)
+	}
+
+}
+
+export let Commands = new CommandMediator()
+export let Queries = new QueryMediator()
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

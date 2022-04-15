@@ -1,5 +1,10 @@
 import { IContainer } from "./CQRS.Interface";
 
+/** 
+ * Container base
+ *
+ * @Category Container
+ */
 export class Container {
 	// Memory store of Command.process
 	container: IContainer = { processors: {} }
@@ -18,22 +23,41 @@ export class Container {
     }
 }
 
-// Singletons
+/** 
+ * Command Container singleton
+ *
+ * @Category Container
+ */
 export let CommandContainer = new Container()
+/** 
+ * query Container singleton
+ *
+ * @Category Container
+ */
 export let QueryContainer = new Container()
+
+/** 
+ * PubSub container
+ *
+ * @Category Container
+ */
 export namespace PubSub {
 	// Memory store of pubusb, should be one per mediator
     const container: IContainer = {
         processors: {},
     };
 
-	// this should be used for mediator to subscribe a callback to submit event to the SAGA ochestrator service
+	/**
+	 * this should be used for mediator to subscribe a callback to submit event to the SAGA ochestrator service
+	 */
     export function subscribe(message: string, callback: Function): void {
         container.processors[message] = callback;
     }
 
-	// this should be used for CommandHandlers to notify something has completed
-	// this is fire and forget, regardless success failure
+	/**
+	 * this should be used for CommandHandlers to notify something has completed
+	 * this is fire and forget, regardless success failure
+	 */
 	export function emit(message:string, payload:any=null) {
 		let handlers = Object.keys(container.processors)
 		if (handlers.length === 0) return

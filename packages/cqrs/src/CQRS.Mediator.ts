@@ -1,6 +1,11 @@
 import { CommandContainer, PubSub } from "./CQRS.Container";
 import { IMediatorMiddleware } from "./CQRS.interface";
 
+/**
+ * Mediator Base Class
+ *
+ * @Category Mediator
+ */
 export abstract class Mediator {
     protected middlewares: IMediatorMiddleware[] = [];
     public abstract Exec(command: string, payload: any): any;
@@ -38,9 +43,16 @@ export abstract class Mediator {
     }
 }
 
+/**
+ * Command Container Signleton
+ *
+ * @Category Mediator
+ */
 class CommandMediator extends Mediator {
 
-	// send command
+	/**
+	 * send command
+	 */
     public Exec(command: string, payload: any): any {
         return this.Process(command, payload);
     }
@@ -52,6 +64,11 @@ class CommandMediator extends Mediator {
 
 }
 
+/** 
+ * Query Container Signleton 
+ *
+ * @Category Mediator
+ */
 class QueryMediator extends Mediator {
 
 	// send Query

@@ -1,0 +1,20 @@
+{
+	"tags": {
+		"allowUnknownTags": ["optional", "category", "subcategory", "component"]
+	},
+	"plugins": [
+		"node_modules/better-docs/typescript",
+		"node_modules/better-docs/typedef-import",
+		"node_modules/better-docs/category",
+		"node_modules/better-docs/component"
+	],
+	"source": {
+		"include": ["./src"],
+		"includePattern": "\\.(jsx|js|ts|tsx)$"
+	},
+	"opts": {
+		"template": "node_modules/better-docs",
+		"readme": "./README",
+		"destination": "./doc"
+	}
+}

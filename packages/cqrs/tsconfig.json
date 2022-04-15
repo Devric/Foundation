@@ -2,7 +2,9 @@
     "compilerOptions": {
 		"allowJs": false,
 		"declaration": true,
-		"types": ["node"],
+		"types": [
+			"node"
+		],
 		"target": "ES2019",
 		"module": "nodenext",
 		"moduleResolution": "nodenext",

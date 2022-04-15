@@ -1,0 +1,37 @@
+#TODO
+
+- EntryPoint
+-- express GET query / POST command
+-- subscribing kafka topic (choreography-saga hybrid)
+
+
+Logical model
+
+* - CQRS
+* -- @CommandsMediator
+* --- @Saga subscription
+* --- @Command()
+* ---- STORE RAW EVENT (@EventStore)
+* ---- Handle
+* ----- EMIT (to SAGA publishing)
+* ----- @AggregateRoot extends @Entities
+* -----  @EventStore
+* -----  @StateStore
+* ------ Sub @Entities / @Repository
+* ------ External service calls
+* ------ Behaviour invariants
+* -- @QuerysMediator
+* ---- @Quries
+* ------ @Projection, Injects multiple @entities 
+* 
+* 
+* - @IProjector (implment by both Aggregate / Projection)
+* -- @EventStore
+* 
+* - @Entity
+* -- @StataeStore (read/write stores)
+* --- type (event sourcing)ESState (each records create time is a snapshots, it will never update, always append)
+* --- type (crud)CState ( normal entity table, always the latest state )
+
+@TODO
+- TEST

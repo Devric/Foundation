@@ -1,4 +1,3 @@
-// Event sourcing
 export namespace ES {
 
 	interface IEventStore {}
@@ -16,6 +15,13 @@ export namespace ES {
 		stateStore: IStateStore;
 	}
 
+	/**
+	 * Event sourcing
+     *
+     *
+     * @category Aggregate
+	 * @subcategory Event Sourcing
+	 */
 	export abstract class AbstractAggregate {
 		private _id             : string // AggregateRootId
 		private eventStore      : IEventStore
@@ -25,6 +31,9 @@ export namespace ES {
 
 		abstract reduce(): void;
 
+		/**
+		 * @Param {iOptions} Options - blah
+		 */
 		constructor({id, eventStore, stateStore }: iOptions) {
 			this._id = id
 			this.eventStore = eventStore
@@ -35,25 +44,39 @@ export namespace ES {
 		}
 
 		// list all the events from EventStore that is after the last revision of StateStore
+		/***/
 		getChanges() { }
 
+		/***/
 		createSnapshot() { }
 
-		// update current state, create snapshot
+		/**
+		 * update current state, create snapshot
+		 */
 		commit() {}
 
+		/**
+		 * List snap shot ids
+		 */
 		listSnapshotsIds() {}
 
+		/**
+		 * Get Aggregate id
+		 */
 		get id(): string {
 			return this._id
 		}
 
+		/**
+		 * Get current state revision
+		 */
 		getRevision() {
 			this.currentRevision = this.state.revision
 		}
 
-		emit() {
-
-		}
+		/**
+		 * Emits DONE event to saga
+		 */
+		emit(eventName: string): void { }
 	}
 }

@@ -1,9 +1,5 @@
-// import { Commands, Command, ICommandHandler, IMediatorMiddleware, AbstractBaseCommand, Entity } from "cqrs"
-import CQRS from "cqrs"
-import { v, TypeOf, compile } from 'suretype'
-
-// Typescript Interface export unable to import directly
-let { Commands, Command, AbstractBaseCommand, Entity } = CQRS
+import { Commands, Command, ICommandHandler, IMediatorMiddleware, AbstractBaseCommand, Entity } from "./"
+// import { v, TypeOf, compile } from 'suretype'
 
 type tCartProp = {
 	qty:number
@@ -105,7 +101,7 @@ namespace CORE {
 let BillingEventStore = new CORE.EventStore()
 
 @Command(Billing.Command)
-class Billing extends AbstractBaseCommand implements CQRS.ICommandHandler<any, boolean> {
+class Billing extends AbstractBaseCommand implements ICommandHandler<any, boolean> {
 	public static get Command():string {return "BILLING";}
 
     EventLog(payload: any) {
@@ -132,7 +128,7 @@ class Billing extends AbstractBaseCommand implements CQRS.ICommandHandler<any, b
 // Cart service commands
 // ============================
 let CartEventStore = new CORE.EventStore()
-abstract class AbstractCartCommandHandler<T, K> extends AbstractBaseCommand implements CQRS.ICommandHandler<T, K> {
+abstract class AbstractCartCommandHandler<T, K> extends AbstractBaseCommand implements ICommandHandler<T, K> {
     abstract Validate(command: T): void;
     abstract Process(command: T): K;
 
@@ -149,14 +145,21 @@ abstract class AbstractCartCommandHandler<T, K> extends AbstractBaseCommand impl
 // ===========================================
 
 // VALIDATION: Create validation object
-let CartSchema = v.object({
-	id: v.string().required(),
-	ip: v.number().required(),
-	products: v.object({}).additional(true).required()
-})
+// let CartSchema = v.object({
+// 	id: v.string().required(),
+// 	ip: v.number().required(),
+// 	products: v.object({}).additional(true).required()
+// })
 
 // VALIDATION: transpile it to typescript type
-type tCart = TypeOf<typeof CartSchema>; 
+// type tCart = TypeOf<typeof CartSchema>; 
+type tCart = {
+	id: string,
+	ip: number,
+	products: {
+		[key:string]: number
+	}
+}
 
 // Aggregation
 // ===========================================
@@ -189,8 +192,8 @@ class ADD_CART extends AbstractCartCommandHandler<tCart, boolean> {
 	public static get Command():string {return "ADD_CART";}
 
 	Validate(payload: tCart){
-		let valid = compile(CartSchema)(payload)
-		if (!valid.ok) throw new Error(JSON.stringify(valid.errors))
+		// let valid = compile(CartSchema)(payload)
+		// if (!valid.ok) throw new Error(JSON.stringify(valid.errors))
 	}
 
 	Process(payload: tCart){
@@ -206,8 +209,8 @@ class REMOVE_CART extends AbstractCartCommandHandler<tCart, boolean> {
 	public static get Command():string {return "REMOVE_CART";}
 
 	Validate(payload: tCart){
-		let valid = compile(CartSchema)(payload)
-		if (!valid.ok) throw new Error(JSON.stringify(valid.errors))
+		// let valid = compile(CartSchema)(payload)
+		// if (!valid.ok) throw new Error(JSON.stringify(valid.errors))
 	}
 
 	Process(payload: tCart){
@@ -226,7 +229,7 @@ class REMOVE_CART extends AbstractCartCommandHandler<tCart, boolean> {
 // ----------------------------
 // created specifically for that service
 // should not shared across service
-class LoggingMiddleware implements CQRS.IMediatorMiddleware {
+class LoggingMiddleware implements IMediatorMiddleware {
 	PreProcess(payload: any, ctx:any){
 		// send this to file log
 		console.log("================ pre processing =====================")

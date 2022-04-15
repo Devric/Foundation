@@ -1,6 +1,11 @@
 import { PubSub } from "./CQRS.Container";
 
-// To let command use emit
+/**
+* Abstract Class Command
+* To let command use emit
+*
+* @Category Commands
+*/
 export abstract class AbstractBaseCommand {
 	abstract Validate(command : any): void;
 

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Home</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Aggregate</h2><h3>Classes / Event Sourcing</h3><ul><li><a href="AbstractAggregate.html">AbstractAggregate</a></li></ul></div><div class="category"><h2>Commands</h2><h3>Classes</h3><ul><li><a href="AbstractBaseCommand.html">AbstractBaseCommand</a></li></ul></div><div class="category"><h2>Container</h2><h3>Classes</h3><ul><li><a href="Container.html">Container</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CommandContainer">CommandContainer</a></li><li><a href="global.html#PubSub">PubSub</a></li><li><a href="global.html#QueryContainer">QueryContainer</a></li></ul></div><div class="category"><h2>Decorators</h2><h3>Global</h3><ul><li><a href="global.html#Command">Command</a></li></ul></div><div class="category"><h2>Entity</h2><h3>Classes / All</h3><ul><li><a href="Entity.html">Entity</a></li></ul></div><div class="category"><h2>Mediator</h2><h3>Classes</h3><ul><li><a href="CommandMediator.html">CommandMediator</a></li><li><a href="Mediator.html">Mediator</a></li><li><a href="QueryMediator.html">QueryMediator</a></li></ul></div><div class="category"><h2>Utility</h2><h3>Global</h3><ul><li><a href="global.html#uuid">uuid</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p></p>
+                    <h1>Home</h1>
+                </header>
+                
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><p>#TODO</p>
+<ul>
+<li>EntryPoint
+-- express GET query / POST command
+-- subscribing kafka topic (choreography-saga hybrid)</li>
+</ul>
+<p>Logical model</p>
+<ul>
+<li>
+<ul>
+<li>CQRS</li>
+</ul>
+</li>
+<li>-- @CommandsMediator</li>
+<li>--- @Saga subscription</li>
+<li>--- @Command()</li>
+<li>---- STORE RAW EVENT (@EventStore)</li>
+<li>---- Handle</li>
+<li>----- EMIT (to SAGA publishing)</li>
+<li>----- @AggregateRoot extends @Entities</li>
+<li>-----  @EventStore</li>
+<li>-----  @StateStore</li>
+<li>------ Sub @Entities / @Repository</li>
+<li>------ External service calls</li>
+<li>------ Behaviour invariants</li>
+<li>-- @QuerysMediator</li>
+<li>---- @Quries</li>
+<li>------ @Projection, Injects multiple @entities</li>
+<li></li>
+<li></li>
+<li>
+<ul>
+<li>@IProjector (implment by both Aggregate / Projection)</li>
+</ul>
+</li>
+<li>-- @EventStore</li>
+<li></li>
+<li>
+<ul>
+<li>@Entity</li>
+</ul>
+</li>
+<li>-- @StataeStore (read/write stores)</li>
+<li>--- type (event sourcing)ESState (each records create time is a snapshots, it will never update, always append)</li>
+<li>--- type (crud)CState ( normal entity table, always the latest state )</li>
+</ul></article>
+    </section>
+
+
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>
