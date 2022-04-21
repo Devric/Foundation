@@ -30,3 +30,21 @@ Logical model
 -- @StataeStore (read/write stores)
 --- type (event sourcing)ESState (each records create time is a snapshots, it will never update, always append)
 --- type (crud)CState ( normal entity table, always the latest state )
+
+
+@TODO
+- https://github.com/evgeniy-khist/eventstoredb-event-sourcing#c4b3d1c8edab1825366ac1d541d8226f
+- https://www.mirkosertic.de/blog/2013/04/domain-driven-design-example/
+- https://www.eventstore.com/blog/4-strategies-for-future-events-with-event-sourcing
+- https://khalilstemmler.com/articles/typescript-domain-driven-design/aggregate-design-persistence/
+- https://khalilstemmler.com/articles/typescript-domain-driven-design/repository-dto-mapper/
+- https://khalilstemmler.com/articles/typescript-domain-driven-design/updating-aggregates-in-domain-driven-design/
+- https://www.dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_2011_1.pdf
+- https://codeopinion.com/category/event-sourcing/
+- https://codeopinion.com/projections-in-event-sourcing-build-any-model-you-want/
+- https://barryosull.com/blog/managing-projectors-is-harder-than-you-think/
+- https://dev.to/barryosull/projection-building-blocks-what-youll-need-to-build-projections--5g1n
+- https://github.com/stemmlerjs/ddd-forum
+- https://whimsical.com/ddd-event-driven-75hV4qvwVeYWNKkQyDzGyN
+- https://github.com/oskardudycz/EventSourcing.NodeJS/blob/0ffc1c641ef4a60010b69bd81d7f9a5351acb1b9/samples/snapshots/src/cashRegisters/cashRegister.ts
+- https://medium.com/@madhukaudantha/microservice-architecture-and-design-patterns-for-microservices-e0e5013fd58a#:~:text=Those%20can%20overcome%20with%20using,can%20divide%20into%20five%20Patterns.
