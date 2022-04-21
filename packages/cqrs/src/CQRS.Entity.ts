@@ -4,27 +4,42 @@
  * @category Entity
  * @subcategory All
  */
-export abstract class Entity<T> {
-	protected readonly _id: string
-	protected props: T
 
-	constructor(props: T, id?:string) {
-		this.props = props
-		this._id = id ? id : uuid() // TODO should _id handled this way?
+interface iEntityProp {
+	readonly _id?: string
+	createdAt?: Date
+	updatedAt?: Date
+}
+
+interface makeEntity<T> {
+	():T;
+	<K extends keyof T>(props: K): T[K];
+}
+
+export abstract class Entity<T extends iEntityProp> {
+	updatedAt: Date = new Date()
+	readonly createdAt: Date = new Date()
+
+	constructor(props: T) {
+		if (!props._id) {
+			props = Object.assign({_id:uuid()}, props)
+		}
+		Object.assign(this, props)
 	}
 
-	update() {}
-
-	validate() {}
-
-	toJson() {
-		return JSON.stringify(this)
+	// CRUD
+	update(props?: Partial<Omit<T, "_id, createdAt">>) {
+		// TODO this should come from db, not class
+		// props.updatedAt = new Date()
+		Object.assign(this, props)
 	}
 
-	toObject() {
-		return Object.assign({}, this)
-	}
+	// validate should be called explicitly when using, this can be done via external classes
+	abstract validate(props?:any): boolean
 
+	// Transform
+	asJson() { return JSON.stringify(this) }
+	asObject() { return Object.assign({}, this) }
 }
 
 /**

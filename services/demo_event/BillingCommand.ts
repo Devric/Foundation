@@ -15,9 +15,10 @@ export class Billing extends AbstractBaseCommand implements CQRS.ICommandHandler
 
     EventLog(payload: any) {
 		BillingEventStore.add({
-			command: this.constructor.name,
-			version: 1,
-			payload: payload
+			eventName : this.constructor.name,
+			version   : 1,
+			payload   : payload,
+			timestamp: new Date()
 		})
 	}
 

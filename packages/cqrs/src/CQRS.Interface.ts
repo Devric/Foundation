@@ -35,3 +35,13 @@ export interface IMessage {
 export interface IAggregate<IState, IMessage> {
 	Events: IMessage[]
 }
+
+export interface IEvent {
+	eventName: string;
+	timestamp: Date;
+	version: number;
+	payload: any;
+	revision?: number
+	metadata?: any
+}
+

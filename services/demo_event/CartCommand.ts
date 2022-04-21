@@ -2,65 +2,26 @@
 import CQRS from "cqrs"
 import { v, TypeOf, compile } from 'suretype'
 
+import { CORE } from './CartStateStore'
+import { CartEventStore } from './CartEventStore'
+
 // Typescript Interface export unable to import directly
-let { Command, AbstractBaseCommand, Entity, EventStore } = CQRS
-
-type tCartProp = {
-	qty:number
-}
-class Cart extends Entity<tCartProp> {
-	constructor(prop:tCartProp, _id?:string) {
-		super(prop, _id)
-		console.log(this)
-	}
-}
-
-var x = new Cart({qty:0})
-console.log(x.toObject())
-
-// demo StateStore
-namespace CORE {
-	export interface IStore {
-		get():any
-		set():boolean
-	}
-
-	export class StateStore<T> implements IStore {
-		revision: number = 0
-		state: T = {} as T
-
-		get() {
-			return {...this}
-		}
-
-		set() {
-			// this.revision = payload.revision
-
-			return true
-		}
-	}
-}
-
-namespace CORE {
-	export class Respository<IStore> {
-		
-	}
-}
+let { Command, AbstractBaseCommand, Entity, EventStore,  } = CQRS
 
 
 
 // Cart service commands
 // ============================
-let CartEventStore = new EventStore()
 abstract class AbstractCartCommandHandler<T, K> extends AbstractBaseCommand implements CQRS.ICommandHandler<T, K> {
     abstract Validate(command: T): void;
     abstract Process(command: T): K;
 
     EventLog(payload: any) {
 		CartEventStore.add({
-			command: this.constructor.name,
-			version: 1,
-			payload: payload
+			eventName : this.constructor.name,
+			version   : 1,
+			payload   : payload,
+			timestamp: new Date()
 		})
 	}
 }
@@ -138,4 +99,20 @@ export class REMOVE_CART extends AbstractCartCommandHandler<tCart, boolean> {
 	}
 }
 
+/*
+- Cart ( event service )
+-- add cart
+-- remove cart
+-- change item qty
+-- checkout
 
+- Catalog ( crud service)
+-- query
+
+- warehouse ( event service )
+
+- billing (crud service)
+- address (crud service)
+
+User sees an error message if they order more than the amount of that product in stock.
+*/

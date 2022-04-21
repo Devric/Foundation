@@ -1,33 +1,26 @@
-export interface IEventStoreEvent {
-	command: string
-	version: number
-	revision?: number
-	timestemp?: Date
-	payload?: any
-	metadata?: any
-}
+import { IEvent } from './CQRS.Interface'
 
 // TODO create abstract and interface
 /**
  * EventStore
  *
- * Stores Input Event
+ * Stores Input Event, this is just local strategy
  *
  * @category Store
  * @subcategory EventSourcing
  */
 export class EventStore {
-	stream: Array<IEventStoreEvent> = []
+	stream: Array<IEvent> = []
 	handlers: Array<Function> = []
 
-	add(event: IEventStoreEvent) {
+	add(event: IEvent) {
 		event.revision = ++this.stream.length
-		event.timestemp = new Date()
+		event.timestamp = new Date()
 		this.stream.push(event)
 		this.stream = this.stream.filter(() => true)
 		this.handlers.forEach(( handler:Function )=> handler(event) )
 	}
-	read(): Array<IEventStoreEvent>{
+	read(): Array<IEvent>{
 		return [...this.stream]
 	}
 	subscribe(fn:Function) {
