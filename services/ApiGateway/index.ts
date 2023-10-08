@@ -1,19 +1,7 @@
 import express from 'express'
 import helmet from 'helmet'
-import { createProxyMiddleware } from 'http-proxy-middleware'
-import LoadBalancer from './LoadBalancer'
-import morgan from 'morgan'
-import request from './request'
-
-const app = express()
-const port = 3040
-
-
-app.use(express.json())
-app.use(helmet())
-
-// TODO decide on using pino express-pino-logger
-app.use(morgan('combined'))
+import { SetupLoadBalancer } from './LoadBalancer.middleware'
+import { SetupLogging} from './Logging.middleware'
 
 // TODO Circut breaker https://medium.com/geekculture/nodejs-circuit-breaker-pattern-ed6b31896a57
 // TODO service discovery https://microservices.io/patterns/client-side-discovery.html
@@ -27,34 +15,42 @@ app.use(morgan('combined'))
 // TODO authentication / authorisation
 // TODO move Resgistry as configuration file
 
-let registry = {
+const app = express()
+const port = 3040
+
+
+// Basic
+// ==============================
+app.use(express.json())
+app.use(helmet())
+
+// Logger
+// ==============================
+SetupLogging(app)
+
+let routes = {
 	'/posts': {
-		strategy: 'ROUND_ROBIN',
-		targets: [ 'http://localhost:9999', 'http://localhost:9998' ]
+		strategy: 'ROUND_ROBIN', // load balacner
+		targets: [ 'http://localhost:9999', 'http://localhost:9998' ] // load balancer
 	},
 	'/comments':{
-		strategy: 'ROUND_ROBIN',
-		targets: [ 'http://localhost:9999' ]
+		strategy: 'ROUND_ROBIN', // load balancer
+		targets: [ 'http://localhost:9999' ] // load balancer
 	}
 }
 
-// forward by registry
-for (const [key,val] of Object.entries(registry)){
-	var LB = new LoadBalancer()
+// Load Blancer
+// ==============================
+SetupLoadBalancer(app, routes)
 
-	app.use(key, (req, res,next)=>{
-		let target = LB.ROUND_ROBIN(val.targets)
-		createProxyMiddleware(target)(req,res,next)
-	})
 
-	//app.use('/posts', createProxyMiddleware('http://localhost:9999'))
-	//app.use('/comments', createProxyMiddleware('http://localhost:9999'))
-}
 
+// Fallback
+// ==============================
 
 // TODO expose a derived object, and let the frontend check status so it doesnt block server side
-app.get('/', (req, res)=> {
-	res.json(registry)
+app.get('/', (req:any, res:any)=> {
+	res.json(routes)
 })
 
 app.listen(port, ()=>{
