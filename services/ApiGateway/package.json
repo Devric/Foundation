@@ -5,7 +5,8 @@
 	"main": "index.ts",
 	"scripts": {
 		"dev": "concurrently 'nodemon index.ts' 'json-server --watch test/test-json-api.json --port 9999' 'json-server --watch test/test-json-api.json --port 9998'",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"startSideCar": "SideCar"
 	},
 	"author": "Devric",
 	"license": "ISC",
@@ -15,7 +16,8 @@
 		"express-rate-limit": "^7.1.0",
 		"helmet": "^5.0.2",
 		"http-proxy-middleware": "^2.0.4",
-		"morgan": "^1.10.0"
+		"morgan": "^1.10.0",
+		"Logger": "*workspace"
 	},
 	"devDependencies": {
 		"@types/express-http-proxy": "^1.6.3",

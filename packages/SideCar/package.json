@@ -1,0 +1,11 @@
+{
+	"name": "SideCar",
+	"version": "0.0.1",
+	"description": "",
+	"main": "index.ts",
+	"bin": "./index.js",
+	"author": "Devric",
+	"license": "ISC",
+	"dependencies": {
+	}
+}
