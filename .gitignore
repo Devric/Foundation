@@ -7,3 +7,7 @@ test.db
 user.db
 dist.browser
 dist
+tools/wiki/bookstack_app_data
+tools/wiki/bookstack_db_data
+tools/wiki/config
+tools/wiki/db

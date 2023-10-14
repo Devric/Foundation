@@ -201,6 +201,12 @@ importers:
         specifier: ^2.8.6
         version: 2.8.6
 
+  packages/AsyncContext:
+    devDependencies:
+      '@types/node':
+        specifier: ^17.0.21
+        version: 17.0.21
+
   packages/Logger:
     dependencies:
       winston:
@@ -266,101 +272,6 @@ importers:
         specifier: ^4.6.2
         version: 4.6.2
 
-  services/AccountService:
-    dependencies:
-      '@types/express':
-        specifier: ^4.17.18
-        version: 4.17.18
-      express:
-        specifier: ^4.18.2
-        version: 4.18.2
-      express-rate-limit:
-        specifier: ^7.1.0
-        version: 7.1.0(express@4.18.2)
-      helmet:
-        specifier: ^5.0.2
-        version: 5.0.2
-      http-proxy-middleware:
-        specifier: ^2.0.4
-        version: 2.0.4(@types/express@4.17.18)
-      morgan:
-        specifier: ^1.10.0
-        version: 1.10.0
-    devDependencies:
-      '@types/express-http-proxy':
-        specifier: ^1.6.3
-        version: 1.6.3
-      '@types/morgan':
-        specifier: ^1.9.3
-        version: 1.9.3
-      '@types/node':
-        specifier: ^17.0.21
-        version: 17.0.21
-      concurrently:
-        specifier: ^7.0.0
-        version: 7.0.0
-      json-server:
-        specifier: ^0.17.0
-        version: 0.17.0
-      nodemon:
-        specifier: ^2.0.15
-        version: 2.0.15
-      ts-node:
-        specifier: ^10.7.0
-        version: 10.7.0(@types/node@17.0.21)(typescript@4.6.3)
-      typescript:
-        specifier: ^4.6.3
-        version: 4.6.3
-
-  services/ApiGateway:
-    dependencies:
-      '@types/express':
-        specifier: ^4.17.18
-        version: 4.17.18
-      Logger:
-        specifier: '*workspace'
-        version: link:../../packages/Logger
-      express:
-        specifier: ^4.18.2
-        version: 4.18.2
-      express-rate-limit:
-        specifier: ^7.1.0
-        version: 7.1.0(express@4.18.2)
-      helmet:
-        specifier: ^5.0.2
-        version: 5.0.2
-      http-proxy-middleware:
-        specifier: ^2.0.4
-        version: 2.0.4(@types/express@4.17.18)
-      morgan:
-        specifier: ^1.10.0
-        version: 1.10.0
-    devDependencies:
-      '@types/express-http-proxy':
-        specifier: ^1.6.3
-        version: 1.6.3
-      '@types/morgan':
-        specifier: ^1.9.3
-        version: 1.9.3
-      '@types/node':
-        specifier: ^17.0.21
-        version: 17.0.21
-      concurrently:
-        specifier: ^7.0.0
-        version: 7.0.0
-      json-server:
-        specifier: ^0.17.0
-        version: 0.17.0
-      nodemon:
-        specifier: ^2.0.15
-        version: 2.0.15
-      ts-node:
-        specifier: ^10.7.0
-        version: 10.7.0(@types/node@17.0.21)(typescript@4.6.3)
-      typescript:
-        specifier: ^4.6.3
-        version: 4.6.3
-
   services/demo_esdb:
     dependencies:
       '@eventstore/db-client':
@@ -409,6 +320,138 @@ importers:
       kafkajs:
         specifier: ^1.16.0
         version: 1.16.0
+
+  services/service-account:
+    dependencies:
+      '@types/express':
+        specifier: ^4.17.18
+        version: 4.17.18
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+      express-rate-limit:
+        specifier: ^7.1.0
+        version: 7.1.0(express@4.18.2)
+      helmet:
+        specifier: ^5.0.2
+        version: 5.0.2
+      http-proxy-middleware:
+        specifier: ^2.0.4
+        version: 2.0.4(@types/express@4.17.18)
+      morgan:
+        specifier: ^1.10.0
+        version: 1.10.0
+    devDependencies:
+      '@types/express-http-proxy':
+        specifier: ^1.6.3
+        version: 1.6.3
+      '@types/morgan':
+        specifier: ^1.9.3
+        version: 1.9.3
+      '@types/node':
+        specifier: ^17.0.21
+        version: 17.0.21
+      concurrently:
+        specifier: ^7.0.0
+        version: 7.0.0
+      json-server:
+        specifier: ^0.17.0
+        version: 0.17.0
+      nodemon:
+        specifier: ^2.0.15
+        version: 2.0.15
+      ts-node:
+        specifier: ^10.7.0
+        version: 10.7.0(@types/node@17.0.21)(typescript@4.6.3)
+      typescript:
+        specifier: ^4.6.3
+        version: 4.6.3
+
+  services/service-api-gateway:
+    dependencies:
+      '@types/express':
+        specifier: ^4.17.18
+        version: 4.17.18
+      Logger:
+        specifier: '*workspace'
+        version: link:../../packages/Logger
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+      express-rate-limit:
+        specifier: ^7.1.0
+        version: 7.1.0(express@4.18.2)
+      helmet:
+        specifier: ^5.0.2
+        version: 5.0.2
+      http-proxy-middleware:
+        specifier: ^2.0.4
+        version: 2.0.4(@types/express@4.17.18)
+      morgan:
+        specifier: ^1.10.0
+        version: 1.10.0
+    devDependencies:
+      '@types/express-http-proxy':
+        specifier: ^1.6.3
+        version: 1.6.3
+      '@types/morgan':
+        specifier: ^1.9.3
+        version: 1.9.3
+      '@types/node':
+        specifier: ^17.0.21
+        version: 17.0.21
+      concurrently:
+        specifier: ^7.0.0
+        version: 7.0.0
+      json-server:
+        specifier: ^0.17.0
+        version: 0.17.0
+      nodemon:
+        specifier: ^2.0.15
+        version: 2.0.15
+      ts-node:
+        specifier: ^10.7.0
+        version: 10.7.0(@types/node@17.0.21)(typescript@4.6.3)
+      typescript:
+        specifier: ^4.6.3
+        version: 4.6.3
+
+  services/service-app:
+    dependencies:
+      AsyncContext:
+        specifier: '*workspace'
+        version: link:../../packages/AsyncContext
+      Logger:
+        specifier: '*workspace'
+        version: link:../../packages/Logger
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+      helmet:
+        specifier: ^5.0.2
+        version: 5.0.2
+      http-proxy-middleware:
+        specifier: ^2.0.4
+        version: 2.0.4(@types/express@4.17.18)
+      morgan:
+        specifier: ^1.10.0
+        version: 1.10.0
+    devDependencies:
+      '@types/express':
+        specifier: ^4.17.18
+        version: 4.17.18
+      '@types/node':
+        specifier: ^17.0.21
+        version: 17.0.21
+      nodemon:
+        specifier: ^2.0.15
+        version: 2.0.15
+      ts-node:
+        specifier: ^10.7.0
+        version: 10.7.0(@types/node@17.0.21)(typescript@4.6.3)
+      typescript:
+        specifier: ^4.6.3
+        version: 4.6.3
 
 packages:
 
@@ -3487,7 +3530,7 @@ packages:
     dev: true
 
   /connect-pause@0.1.1:
-    resolution: {integrity: sha1-smmyu4Ldsaw9tQmcD7WCq6mfs3o=}
+    resolution: {integrity: sha512-a1gSWQBQD73krFXdUEYJom2RTFrWUL3YvXDCRkyv//GVXc79cdW9MngtRuN9ih4FDKBtfJAJId+BbDuX+1rh2w==}
     dev: true
 
   /console-control-strings@1.1.0:
@@ -6680,7 +6723,7 @@ packages:
     dev: true
 
   /jju@1.4.0:
-    resolution: {integrity: sha1-o6vicYryQaKykE+EpiWXDzia4yo=}
+    resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
     dev: true
 
   /joi@14.3.1:
@@ -6841,7 +6884,7 @@ packages:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
 
   /json-parse-helpfulerror@1.0.3:
-    resolution: {integrity: sha1-E/FM4C7tTpgSl7ZOueO5MuLdE9w=}
+    resolution: {integrity: sha512-XgP0FGR77+QhUxjXkwOMkC94k3WtqEBfcnjWqhRd82qTat4SWKRE+9kUnynz/shm3I4ea2+qISvTIeGTNU7kJg==}
     dependencies:
       jju: 1.4.0
     dev: true
@@ -8049,7 +8092,7 @@ packages:
     engines: {node: '>=8.6'}
 
   /pify@3.0.0:
-    resolution: {integrity: sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=}
+    resolution: {integrity: sha512-C3FsVNH1udSEX48gGX1xfvwTWfsYWj5U+8/uK15BGzIGrKoUpghX8hWZwa/OFnakBiiVNmBvemTJR5mcy7iPcg==}
     engines: {node: '>=4'}
     dev: true
 
@@ -8722,7 +8765,7 @@ packages:
     dev: true
 
   /requires-port@1.0.0:
-    resolution: {integrity: sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=}
+    resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
     dev: false
 
   /requizzle@0.2.3:
@@ -8886,7 +8929,7 @@ packages:
       object-assign: 4.1.1
 
   /semver-compare@1.0.0:
-    resolution: {integrity: sha1-De4hahyUGrN+nvsXiPavxf9VN/w=}
+    resolution: {integrity: sha512-YM3/ITh2MJ5MtzaM429anh+x2jiLVjqILF4m4oyQB18W7Ggea7BfqdH/wGMK7dDiMghv/6WG7znWMwUDzJiXow==}
     dev: true
 
   /semver-diff@3.1.1:
@@ -8978,7 +9021,7 @@ packages:
       - supports-color
 
   /server-destroy@1.0.1:
-    resolution: {integrity: sha1-8Tv5KOQrnD55OD5hzDmYtdFObN0=}
+    resolution: {integrity: sha512-rb+9B5YBIEzYcD6x2VKidaa+cqYBJQKnU4oe4E3ANwRRN56yk/ua1YCJT1n21NTS8w6CcOclAKNP3PhdCXKYtQ==}
     dev: true
 
   /set-blocking@2.0.0:
@@ -9225,7 +9268,7 @@ packages:
     engines: {node: '>= 0.8'}
 
   /steno@0.4.4:
-    resolution: {integrity: sha1-BxEFvfwobmYVwEA8J+nXtdy4Vcs=}
+    resolution: {integrity: sha512-EEHMVYHNXFHfGtgjNITnka0aHhiAlo93F7z2/Pwd+g0teG9CnM3JIINM7hVVB5/rhw9voufD7Wukwgtw2uqh6w==}
     dependencies:
       graceful-fs: 4.2.9
     dev: true
